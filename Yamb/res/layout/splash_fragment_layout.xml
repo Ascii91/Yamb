@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_background" >
+
+    <Button
+        android:id="@+id/button_igraj"
+        style="@style/btnStyleArsenic"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:layout_alignBottom="@+id/button_podesavanja"
+        android:layout_alignLeft="@+id/button_podesavanja"
+        android:layout_alignRight="@+id/button_podesavanja"
+        android:layout_marginBottom="80dp"
+        android:alpha="0.76"
+        android:text="@string/igraj" />
+
+    <Button
+        android:id="@+id/button_podesavanja"
+        style="@style/btnStyleArsenic"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="290dp"
+        android:alpha="0.76"
+        android:text="@string/podesavanja" />
+
+    <Button
+        android:id="@+id/button_statistika"
+        style="@style/btnStyleArsenic"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:layout_alignLeft="@+id/button_podesavanja"
+        android:layout_alignRight="@+id/button_podesavanja"
+        android:layout_below="@+id/button_igraj"
+        android:layout_marginTop="17dp"
+        android:alpha="0.76"
+        android:text="@string/statistika" />
+
+</RelativeLayout>
