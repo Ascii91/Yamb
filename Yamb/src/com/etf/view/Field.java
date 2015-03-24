@@ -1,6 +1,7 @@
 package com.etf.view;
 
-import model.FieldData;
+import com.etf.model.FieldData;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;

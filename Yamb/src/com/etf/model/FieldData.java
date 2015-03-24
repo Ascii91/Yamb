@@ -1,6 +1,7 @@
-package model;
+package com.etf.model;
 
-import utils.Constants;
+import com.etf.utils.Constants;
+
 import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;

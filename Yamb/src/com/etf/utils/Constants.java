@@ -1,4 +1,4 @@
-package utils;
+package com.etf.utils;
 
 public class Constants
 {

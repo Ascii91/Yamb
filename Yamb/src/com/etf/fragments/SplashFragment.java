@@ -1,6 +1,5 @@
 package com.etf.fragments;
 
-import utils.Constants;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -19,6 +18,7 @@ import android.widget.EditText;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.etf.utils.Constants;
 import com.etf.yamb.R;
 
 public class SplashFragment extends Fragment implements OnClickListener, android.widget.CompoundButton.OnCheckedChangeListener

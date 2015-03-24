@@ -3,8 +3,9 @@ package com.etf.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.FieldData;
-import utils.Constants;
+import com.etf.model.FieldData;
+import com.etf.utils.Constants;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -38,25 +39,31 @@ public class Board extends ImageView
 	}
 
 	public void initBoard()
-	{Log.e("INIT", "BOARD");
+	{
+		Log.e("INIT", "BOARD");
 		fields = new ArrayList<Field>();
-		
-		for(int i=0;i<Constants.FIELDS_HORISONTAL;i++)
+
+		for (int i = 0; i < Constants.FIELDS_HORISONTAL; i++)
 		{
-			for(int j=0;j<Constants.FIELDS_VERTICAL;j++)
+			for (int j = 0; j < Constants.FIELDS_VERTICAL; j++)
 			{
-				
-				int type=2;
-				if(i==0||j==0){type = 0;}//border
-				if(j>16||i==7){type = -1;}//empty
-				if(j==7||j==10|| j == 16){type = 1;}//sum
-				
-				
-				
-				
-				fields.add(new Field(this.getContext(),
-						new FieldData(this.getContext(),i, j),type));
-			
+
+				int type = 2;
+				if (i == 0 || j == 0)
+				{
+					type = 0;
+				}// border
+				if (j > 16 || i == 7)
+				{
+					type = -1;
+				}// empty
+				if (j == 7 || j == 10 || j == 16)
+				{
+					type = 1;
+				}// sum
+
+				fields.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+
 			}
 		}
 
@@ -64,17 +71,16 @@ public class Board extends ImageView
 
 	@Override
 	protected void onDraw(Canvas canvas)
-	{ 
-     	super.onDraw(canvas);
+	{
+		super.onDraw(canvas);
 
 		for (Field f : fields)
 		{
 			f.draw(canvas);
-		
+
 		}
-	
+		new Dices(this.getContext()).draw(canvas);
 
 	}
 
-	
 }

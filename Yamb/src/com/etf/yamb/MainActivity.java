@@ -10,9 +10,11 @@ import android.view.MenuItem;
 
 import com.etf.fragments.GameFragment;
 import com.etf.fragments.SplashFragment;
+import com.etf.utils.*;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends FragmentActivity implements ShakeEventManager.ShakeListener
 {
+	private ShakeEventManager sd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -21,6 +23,10 @@ public class MainActivity extends FragmentActivity
 		setContentView(R.layout.activity_main);
 		replaceFragment(new SplashFragment());
 
+		sd = new ShakeEventManager();
+		sd.setListener(this);
+		sd.init(this);
+		sd.register();
 	}
 
 	@Override
@@ -57,10 +63,13 @@ public class MainActivity extends FragmentActivity
 			((GameFragment) fragment).onBackPressed();
 		} else
 		{
-		
-			if(fm.getBackStackEntryCount()==0){super.onBackPressed();}
-				fm.popBackStack();
-		
+
+			if (fm.getBackStackEntryCount() == 0)
+			{
+				super.onBackPressed();
+			}
+			fm.popBackStack();
+
 		}
 	}
 
@@ -69,5 +78,12 @@ public class MainActivity extends FragmentActivity
 
 		FragmentManager fm = this.getFragmentManager();
 		fm.beginTransaction().replace(R.id.container, fragment, "splash").commit();
+	}
+
+	@Override
+	public void onShake()
+	{
+		
+
 	}
 }
