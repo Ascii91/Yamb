@@ -19,6 +19,7 @@ public class Board extends ImageView
 {
 
 	private List<Field> fields;
+	private Dices dices;
 
 	public Board(Context context)
 	{
@@ -66,6 +67,7 @@ public class Board extends ImageView
 
 			}
 		}
+		dices = new Dices(this);
 
 	}
 
@@ -79,7 +81,7 @@ public class Board extends ImageView
 			f.draw(canvas);
 
 		}
-		new Dices(this.getContext()).draw(canvas);
+		dices.draw(canvas);
 
 	}
 

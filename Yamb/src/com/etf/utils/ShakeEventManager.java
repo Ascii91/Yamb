@@ -12,11 +12,12 @@ public class ShakeEventManager implements SensorEventListener
 
 	private SensorManager sManager;
 	private Sensor s;
- 
-	private static final int MOV_COUNTS = 2; 
-	private static final int MOV_THRESHOLD = 5;
+
+
+	private static final int MOV_THRESHOLD =4;
 	private static final float ALPHA = 0.9F;
-	private static final int SHAKE_WINDOW_TIME_INTERVAL = 800; // milliseconds
+	private static final int SHAKE_WINDOW_TIME_INTERVAL = 600; // milliseconds
+	private static final float MOV_LIMIT = 99;
 
 	// Gravity force on x,y,z axis
 	private float gravity[] = new float[3];
@@ -52,10 +53,10 @@ public class ShakeEventManager implements SensorEventListener
 	public void onSensorChanged(SensorEvent sensorEvent)
 	{
 		float maxAcc = calcMaxAcceleration(sensorEvent);
-
-		if (maxAcc >= MOV_THRESHOLD)
+if(maxAcc>1)Log.e("DD",""+maxAcc);
+		if (maxAcc >= MOV_THRESHOLD&& maxAcc< MOV_LIMIT)
 		{
-			Log.e("Counter", "" + counter);
+
 			counter2 = 0;
 			//
 			if (counter <= 0)// ako muckanje nije u toku zapocni novo merenje
@@ -72,13 +73,14 @@ public class ShakeEventManager implements SensorEventListener
 				{
 
 					counter++;
-
+					//listener.onShake();
 				} else
 				{
 					if (!shakeInProgres)
 					{
 						Log.e("Zapoceto Muckanje", "true");
 						shakeInProgres = true;
+						listener.onShake();
 					}
 					return;
 				}
@@ -89,9 +91,8 @@ public class ShakeEventManager implements SensorEventListener
 			if (shakeInProgres)
 			{
 				counter2++;
-				Log.e("Counter2", "" + counter2);
+				
 
-				// ako je vreme isteklo
 				if (counter2 > 3)
 				{
 					resetAllData();
@@ -141,14 +142,17 @@ public class ShakeEventManager implements SensorEventListener
 	private void resetAllData()
 	{
 
-		Log.e("End", "Shake");
+		
 		counter = 0;
 		counter2 = 0;
 		shakeInProgres = false;
+		listener.onStopShaking();
+		Log.e("zavrseno", "muckanje");
 	}
 
 	public static interface ShakeListener
 	{
+		public void onStopShaking();
 		public void onShake();
 	}
 }

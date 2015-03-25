@@ -12,9 +12,9 @@ import com.etf.fragments.GameFragment;
 import com.etf.fragments.SplashFragment;
 import com.etf.utils.*;
 
-public class MainActivity extends FragmentActivity implements ShakeEventManager.ShakeListener
+public class MainActivity extends FragmentActivity
 {
-	private ShakeEventManager sd;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -23,10 +23,7 @@ public class MainActivity extends FragmentActivity implements ShakeEventManager.
 		setContentView(R.layout.activity_main);
 		replaceFragment(new SplashFragment());
 
-		sd = new ShakeEventManager();
-		sd.setListener(this);
-		sd.init(this);
-		sd.register();
+		
 	}
 
 	@Override
@@ -80,10 +77,5 @@ public class MainActivity extends FragmentActivity implements ShakeEventManager.
 		fm.beginTransaction().replace(R.id.container, fragment, "splash").commit();
 	}
 
-	@Override
-	public void onShake()
-	{
-		
-
-	}
+	
 }
