@@ -15,6 +15,9 @@ public class FieldData
 	private int fieldHeight;
 	private int fieldX;
 	private int fieldY;
+	private int fieldValue = -1;
+	private int sugestion = -1;
+	
 
 	public FieldData(Context context, int fieldX, int fieldY)
 	{
@@ -71,6 +74,26 @@ public class FieldData
 	public void setFieldY(int fieldY)
 	{
 		this.fieldY = fieldY;
+	}
+
+	public int getFieldValue()
+	{
+		return fieldValue;
+	}
+
+	public void setFieldValue(int fieldValue)
+	{
+		this.fieldValue = fieldValue;
+	}
+
+	public int getSugestion()
+	{
+		return sugestion;
+	}
+
+	public void setSugestion(int sugestion)
+	{
+		this.sugestion = sugestion;
 	}
 
 }

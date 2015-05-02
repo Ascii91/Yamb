@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.etf.controller.Controler;
 import com.etf.yamb.R;
 
 public class GameFragment extends Fragment
@@ -21,6 +22,9 @@ public class GameFragment extends Fragment
 	{
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.game_fragment_layout, container, false);
+		
+		Controler.getControler().setGameFragment(this);
+		Controler.getControler().initAndStartGame();
 		return view;
 	}
 

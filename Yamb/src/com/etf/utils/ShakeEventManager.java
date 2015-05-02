@@ -13,9 +13,8 @@ public class ShakeEventManager implements SensorEventListener
 	private SensorManager sManager;
 	private Sensor s;
 
-
-	private static final int MOV_THRESHOLD =4;
-	private static final float ALPHA = 0.9F;
+	private static final int MOV_THRESHOLD = 3;
+	private static final float ALPHA = 0.6F;
 	private static final int SHAKE_WINDOW_TIME_INTERVAL = 600; // milliseconds
 	private static final float MOV_LIMIT = 99;
 
@@ -41,7 +40,7 @@ public class ShakeEventManager implements SensorEventListener
 	{
 		sManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
 		s = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		register();
+
 	}
 
 	public void register()
@@ -53,8 +52,7 @@ public class ShakeEventManager implements SensorEventListener
 	public void onSensorChanged(SensorEvent sensorEvent)
 	{
 		float maxAcc = calcMaxAcceleration(sensorEvent);
-if(maxAcc>1)Log.e("DD",""+maxAcc);
-		if (maxAcc >= MOV_THRESHOLD&& maxAcc< MOV_LIMIT)
+		if (maxAcc >= MOV_THRESHOLD && maxAcc < MOV_LIMIT)
 		{
 
 			counter2 = 0;
@@ -73,12 +71,12 @@ if(maxAcc>1)Log.e("DD",""+maxAcc);
 				{
 
 					counter++;
-					//listener.onShake();
+					// listener.onShake();
 				} else
 				{
 					if (!shakeInProgres)
 					{
-						Log.e("Zapoceto Muckanje", "true");
+						// Log.e("Zapoceto Muckanje", "true");
 						shakeInProgres = true;
 						listener.onShake();
 					}
@@ -91,7 +89,6 @@ if(maxAcc>1)Log.e("DD",""+maxAcc);
 			if (shakeInProgres)
 			{
 				counter2++;
-				
 
 				if (counter2 > 3)
 				{
@@ -121,6 +118,13 @@ if(maxAcc>1)Log.e("DD",""+maxAcc);
 
 	private float calcMaxAcceleration(SensorEvent event)
 	{
+		if (gravity[0] == 0 || gravity[1] == 0 || gravity[2] == 0)
+		{
+			gravity[0] = event.values[0];
+			gravity[1] = event.values[1];
+			gravity[2] = event.values[2];
+			return 0;
+		}
 		gravity[0] = calcGravityForce(event.values[0], 0);
 		gravity[1] = calcGravityForce(event.values[1], 1);
 		gravity[2] = calcGravityForce(event.values[2], 2);
@@ -133,7 +137,6 @@ if(maxAcc>1)Log.e("DD",""+maxAcc);
 		return Math.max(max1, accZ);
 	}
 
-	// Low pass filter
 	private float calcGravityForce(float currentVal, int index)
 	{
 		return ALPHA * gravity[index] + (1 - ALPHA) * currentVal;
@@ -142,17 +145,17 @@ if(maxAcc>1)Log.e("DD",""+maxAcc);
 	private void resetAllData()
 	{
 
-		
 		counter = 0;
 		counter2 = 0;
 		shakeInProgres = false;
 		listener.onStopShaking();
-		Log.e("zavrseno", "muckanje");
+
 	}
 
 	public static interface ShakeListener
 	{
 		public void onStopShaking();
+
 		public void onShake();
 	}
 }

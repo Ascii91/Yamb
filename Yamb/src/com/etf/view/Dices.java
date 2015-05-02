@@ -6,17 +6,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.etf.controller.Controler;
 import com.etf.utils.Constants;
 import com.etf.utils.DiceRoller;
 import com.etf.yamb.R;
 
+//Objekat kockice sve 
 public class Dices extends ImageView
 {
 
@@ -27,12 +33,21 @@ public class Dices extends ImageView
 	private Bitmap five;
 	private Bitmap six;
 
+	private Bitmap one_selected;
+	private Bitmap two_selected;
+	private Bitmap three_selected;
+	private Bitmap four_selected;
+	private Bitmap five_selected;
+	private Bitmap six_selected;
+
 	private int startX; // start possition
 	private int startY;// start position of dices y
 	private int margin = 5;
 
 	private DiceRoller diceRoller;
 	private int[] values = new int[6];
+	private boolean[] selected = new boolean[6];
+
 	private Board board;
 
 	public Dices(Context context)
@@ -50,22 +65,6 @@ public class Dices extends ImageView
 		this.board = board;
 		initBitmaps(board.getContext());
 		diceRoller = new DiceRoller(this);
-		diceRoller.register(board.getContext());
-	}
-
-	public void rollDices(int[] dicePositions)
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (dicePositions[i] == 1)
-			{
-				// rollDice
-				// generisi slucajan broj za selektovane kockice i prikazi
-				// animaciju muckanja
-				values[i] = (int) (Math.random() * 6 + 1);
-
-			}
-		}
 
 	}
 
@@ -73,24 +72,44 @@ public class Dices extends ImageView
 
 	public void startShaking()
 	{
-//		if (stopShaking != false)
-//		{
-			stopShaking = false;
-			animateDice(1);
-			animateDice(2);
-			animateDice(3);
-			animateDice(4);
-			animateDice(5);
+
+		stopShaking = false;
+		if (!selected[0])
 			animateDice(0);
-		//}
+
+		if (!selected[1])
+			animateDice(1);
+
+		if (!selected[2])
+			animateDice(2);
+
+		if (!selected[3])
+			animateDice(3);
+
+		if (!selected[4])
+			animateDice(4);
+
+		if (!selected[5])
+			animateDice(5);
+
 	}
 
 	public void stopShaking()
 	{
 		stopShaking = true;
-		 Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-		 // Vibrate for 500 milliseconds
-		 v.vibrate(100);
+		Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+		v.vibrate(100);
+		int brojBacanja = Controler.getControler().getBrojBacanja();
+		brojBacanja++;
+		Controler.getControler().setBrojBacanja(brojBacanja);
+		Controler.getControler().setValues(values);
+
+		Toast.makeText(this.getContext(), "ZBIR: " + values[0] + values[1] + values[2] + values[3] + values[4] + values[5], Toast.LENGTH_LONG).show();
+		synchronized (this)
+		{
+			notifyAll();
+		}
+
 	}
 
 	// animate specific dice
@@ -105,16 +124,22 @@ public class Dices extends ImageView
 				@Override
 				public void run()
 				{
-					values[dice] = (int) ((Math.random() * 6) + 1);
-					 Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-					 // Vibrate for 500 milliseconds
-					 v.vibrate(1);
-					animateDice(dice);
+
+					if (!stopShaking)
+					{
+						Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+						v.vibrate(1);
+						values[dice] = (int) ((Math.random() * 6) + 1);
+						animateDice(dice);
+					}
 					board.postInvalidate();
 
 				}
-			}, 100);
+			}, 160);
 
+		}
+		{
+			board.postInvalidate();
 		}
 	}
 
@@ -146,6 +171,40 @@ public class Dices extends ImageView
 		five = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.five), diceWidth, diceWidth);
 		six = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.six), diceWidth, diceWidth);
 
+		one_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.one_selected), diceWidth, diceWidth);
+		two_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.two_selected), diceWidth, diceWidth);
+		three_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.three_selected), diceWidth, diceWidth);
+		four_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.four_selected), diceWidth, diceWidth);
+		five_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.five_selected), diceWidth, diceWidth);
+		six_selected = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.six_selected), diceWidth, diceWidth);
+
+	}
+
+	private Bitmap getSelectedBitmapByNumber(int i)
+	{
+		switch (i)
+		{
+		case 1:
+
+			return one_selected;
+		case 2:
+			return two_selected;
+		case 3:
+
+			return three_selected;
+		case 4:
+
+			return four_selected;
+		case 5:
+
+			return five_selected;
+		case 6:
+
+			return six_selected;
+		default:
+			return one_selected;
+		}
+
 	}
 
 	private Bitmap getBitmapByNumber(int i)
@@ -153,16 +212,22 @@ public class Dices extends ImageView
 		switch (i)
 		{
 		case 1:
+
 			return one;
 		case 2:
+
 			return two;
 		case 3:
+
 			return three;
 		case 4:
+
 			return four;
 		case 5:
+
 			return five;
 		case 6:
+
 			return six;
 		default:
 			return one;
@@ -175,13 +240,51 @@ public class Dices extends ImageView
 
 		try
 		{
+			if (!selected[0])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[0]), startX + margin, startY, null);
+			} else
+			{
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[0]), startX + margin, startY, null);
+			}
+			if (!selected[1])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[1]), startX + one.getWidth() + margin, startY, null);
+			} else
+			{
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[1]), startX + one.getWidth() + margin, startY, null);
+			}
+			if (!selected[2])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[2]), startX + 2 * one.getWidth() + margin, startY, null);
 
-			canvas.drawBitmap(getBitmapByNumber(values[0]), startX + margin, startY, null);
-			canvas.drawBitmap(getBitmapByNumber(values[1]), startX + one.getWidth() + margin, startY, null);
-			canvas.drawBitmap(getBitmapByNumber(values[2]), startX + 2 * one.getWidth() + margin, startY, null);
-			canvas.drawBitmap(getBitmapByNumber(values[3]), startX + 3 * one.getWidth() + margin, startY, null);
-			canvas.drawBitmap(getBitmapByNumber(values[4]), startX + 4 * one.getWidth() + margin, startY, null);
-			canvas.drawBitmap(getBitmapByNumber(values[5]), startX + 5 * one.getWidth() + margin, startY, null);
+			} else
+			{
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[2]), startX + 2 * one.getWidth() + margin, startY, null);
+			}
+			if (!selected[3])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[3]), startX + 3 * one.getWidth() + margin, startY, null);
+			} else
+			{
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[3]), startX + 3 * one.getWidth() + margin, startY, null);
+			}
+			if (!selected[4])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[4]), startX + 4 * one.getWidth() + margin, startY, null);
+			} else
+			{
+
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[4]), startX + 4 * one.getWidth() + margin, startY, null);
+			}
+			if (!selected[5])
+			{
+				canvas.drawBitmap(getBitmapByNumber(values[5]), startX + 5 * one.getWidth() + margin, startY, null);
+
+			} else
+			{
+				canvas.drawBitmap(getSelectedBitmapByNumber(values[5]), startX + 5 * one.getWidth() + margin, startY, null);
+			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -197,4 +300,70 @@ public class Dices extends ImageView
 
 	}
 
+	public void enableShaking()
+	{
+		diceRoller.register(getContext());
+	}
+
+	public void disableShaking()
+	{
+		diceRoller.deregister();
+	}
+
+	public void setStartX(int startX)
+	{
+		this.startX = startX;
+	}
+
+	public int getStartY()
+	{
+		return startY;
+	}
+
+	public int getStartX()
+	{
+		return startX;
+	}
+
+	public void setStartY(int startY)
+	{
+		this.startY = startY;
+	}
+
+	public void onTouch(MotionEvent v)
+	{
+
+		if (Controler.getControler().getBrojBacanja() == 0)
+		{
+			return;
+		}
+		int bitmapWidth = one.getWidth();
+		int bitmapHeight = one.getHeight();
+
+		int clickedX = (int) v.getX();
+		int clickedY = (int) v.getY();
+
+		for (int i = 0; i <= 5; i++)
+		{
+			int measure = startX + margin + i * bitmapWidth;
+			Rect diceRect = new Rect(measure, startY, measure + bitmapWidth, startY + bitmapHeight);
+			if (diceRect.contains(clickedX, clickedY))
+			{
+				if (selected[i])
+				{
+					Log.e("DESELECT", "" + i);
+					selected[i] = false;
+					board.postInvalidate();
+				} else
+				{
+					selected[i] = true;
+
+					board.postInvalidate();
+				}
+				break;
+			}
+
+		}
+
+	}
 }

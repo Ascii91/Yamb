@@ -4,13 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.etf.fragments.GameFragment;
 import com.etf.fragments.SplashFragment;
-import com.etf.utils.*;
 
 public class MainActivity extends FragmentActivity
 {
