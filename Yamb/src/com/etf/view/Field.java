@@ -1,19 +1,21 @@
 package com.etf.view;
 
-import com.etf.model.FieldData;
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.widget.ImageView;
+
+import com.etf.model.FieldData;
 
 public class Field extends ImageView
 {
 
 	private Context context;
 	private FieldData fieldData;
+	private Bitmap fieldBitmap;
+
 	private Paint paint;
 	private int a, b, c, d;
 	private int type = 0;
@@ -32,19 +34,19 @@ public class Field extends ImageView
 		c = a + fieldData.getFieldWidth();
 		d = b + fieldData.getFieldHeight();
 
-		if (type == 0)
+		if (type == 0) // okvir polja
 		{
 			paint.setColor(Color.RED);
 
-		} else if (type == 1)
+		} else if (type == 1) // suma polja
 		{
 			paint.setColor(Color.BLUE);
-		} else if (type == 2)
+		} else if (type == 2) // upis vrednosnih polja
 		{
 			paint.setColor(Color.YELLOW);
 		}
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(5);
+		paint.setStrokeWidth(6);
 
 	}
 
@@ -66,5 +68,15 @@ public class Field extends ImageView
 	public void setFieldData(FieldData fieldData)
 	{
 		this.fieldData = fieldData;
+	}
+
+	public Bitmap getFieldBitmap()
+	{
+		return fieldBitmap;
+	}
+
+	public void setFieldBitmap(Bitmap fieldBitmap)
+	{
+		this.fieldBitmap = fieldBitmap;
 	}
 }
