@@ -126,9 +126,14 @@ public class Board extends ImageView implements OnTouchListener
 
 		getDices().draw(canvas);
 		txtPaint.setColor(Color.BLUE);
-		txtPaint.setTextSize(42);
-
+		txtPaint.setTextSize(38);
 		canvas.drawText("TOTAL SCORE: 999", getDices().getStartX() + fields.get(0).getFieldData().getFieldWidth() * 2, getDices().getStartY() - 25, txtPaint);
+		txtPaint.setTextSize(32);
+
+		canvas.drawText("" + Controler.getControler().getPlayerName(), getDices().getStartX() + 10, getDices().getStartY() - 25, txtPaint);
+		canvas.drawText("Bacanje: " + Controler.getControler().getBrojBacanja(), getDices().getStartX() + fields.get(0).getFieldData().getFieldWidth() * 2 +350, getDices()
+				.getStartY() - 25, txtPaint);
+
 	}
 
 	public void showDialog()
@@ -157,7 +162,7 @@ public class Board extends ImageView implements OnTouchListener
 					break;
 
 				}
-				
+
 				createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
 
 			}
