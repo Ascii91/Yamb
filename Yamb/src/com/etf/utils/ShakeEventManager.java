@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 
 public class ShakeEventManager implements SensorEventListener
 {
@@ -13,7 +12,7 @@ public class ShakeEventManager implements SensorEventListener
 	private SensorManager sManager;
 	private Sensor s;
 
-	private static final int MOV_THRESHOLD = 3;
+	private static final int MOV_THRESHOLD = 2;
 	private static final float ALPHA = 0.6F;
 	private static final int SHAKE_WINDOW_TIME_INTERVAL = 600; // milliseconds
 	private static final float MOV_LIMIT = 99;

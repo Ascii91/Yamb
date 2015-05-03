@@ -13,8 +13,19 @@ public class Controler
 	private int brojBacanja;
 	private int[] values = new int[6];
 	
+	private String playerName;
+	private int playerNumber;
+	private int numOfPlayers;
 	
 	
+	
+	
+	
+	public int getNumOfPlayers()
+	{
+		return numOfPlayers;
+	}
+
 	public Board getBoard()
 	{
 		return board;
@@ -100,6 +111,31 @@ public class Controler
 	public void setValues(int[] values)
 	{
 		this.values = values;
+	}
+
+	public int getPlayerNumber()
+	{
+		return playerNumber;
+	}
+
+	public void setPlayerNumber(int playerNumber)
+	{
+		this.playerNumber = playerNumber;
+	}
+
+	public String getPlayerName()
+	{
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName)
+	{
+		this.playerName = playerName;
+	}
+
+	public void setNumOfPlayers(int num)
+	{
+		this.numOfPlayers = num;
 	}
 
 }

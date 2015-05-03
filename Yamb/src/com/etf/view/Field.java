@@ -1,17 +1,23 @@
 package com.etf.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.util.Log;
-import android.view.accessibility.CaptioningManager;
+import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.etf.controller.Controler;
+import com.etf.controller.GameProgress;
+import com.etf.controller.State;
 import com.etf.model.FieldData;
+import com.etf.utils.Constants;
 import com.etf.yamb.R;
 
 public class Field extends ImageView
@@ -20,7 +26,7 @@ public class Field extends ImageView
 	private Context context;
 	private FieldData fieldData;
 	private Bitmap fieldBitmap;
-	private int highlightColor=0;
+	private int highlightColor = 0;
 
 	private Paint paint;
 	private int a, b, c, d;
@@ -31,7 +37,7 @@ public class Field extends ImageView
 		super(context);
 		this.context = context;
 		this.setFieldData(fieldData);
-		this.type = type;
+		this.setType(type);
 
 		paint = new Paint();
 
@@ -63,7 +69,7 @@ public class Field extends ImageView
 	{
 		if (fieldY == 0) // prvi red
 		{
-	//		Log.e("XXX", "TRUE" + fieldX);
+
 			switch (fieldX / fieldData.getFieldWidth())
 			{
 			case 1:
@@ -93,19 +99,40 @@ public class Field extends ImageView
 	protected void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
-		if (type != -1)
+		if (getType() != -1)
 		{
 			int cc = paint.getColor();
-			
-			if (type == 2)
+
+			if (getType() == 2)
 			{
-				paint.setStyle(Style.FILL);
-				paint.setColor(getHighlightColor());
-				canvas.drawRect(a+3, b+3, c-3, d-3, paint);
+
+				if (fieldData.getSugestion() >= 0 && fieldData.getFieldValue() == -1)
+				{
+					paint.setStyle(Style.FILL);
+					paint.setColor(getHighlightColor());
+					canvas.drawRect(a + 3, b + 3, c - 3, d - 3, paint);
+					paint.setTextSize(42);
+					paint.setColor(0x3f00ff00);
+					canvas.drawText("" + fieldData.getSugestion(), fieldData.getFieldX() + fieldData.getFieldWidth() / 3, fieldData.getFieldY() + 2 * fieldData.getFieldHeight()
+							/ 3, paint);
+					// fieldData.setSugestion(0);
+					// highlightColor = 0;
+				}
+
+				else if (fieldData.getFieldValue() != -1)
+				{
+					paint.setTextSize(42);
+					paint.setStrokeWidth(3);
+					paint.setColor(Color.BLACK);
+					canvas.drawText("" + fieldData.getFieldValue(), fieldData.getFieldX() + fieldData.getFieldWidth() / 3, fieldData.getFieldY() + 2 * fieldData.getFieldHeight()
+							/ 3, paint);
+				}
+
 			}
+			//
 			paint.setStyle(Style.STROKE);
 			paint.setColor(cc);
-		
+
 			canvas.drawRect(a, b, c, d, paint);
 
 			if (fieldBitmap != null)
@@ -119,12 +146,11 @@ public class Field extends ImageView
 				paint.setColor(Color.BLACK);
 				paint.setTextSize(42);
 
-			//	Log.e("X" + fieldData.getFieldX(), "Y" + fieldData.getFieldY() + "**" + (fieldData.getFieldY() / fieldData.getFieldHeight()));
-
 				switch (fieldData.getFieldY() / fieldData.getFieldHeight())
 				{
 				case 1:
-				//	Log.e("X.." + fieldData.getFieldX(), "Y.." + fieldData.getFieldY());
+					// Log.e("X.." + fieldData.getFieldX(), "Y.." +
+					// fieldData.getFieldY());
 					canvas.drawText("1", fieldData.getFieldWidth() / 4, fieldData.getFieldHeight() + fieldData.getFieldY() - fieldData.getFieldHeight() / 4, paint);
 					break;
 				case 2:
@@ -230,4 +256,101 @@ public class Field extends ImageView
 		this.highlightColor = highlightColor;
 	}
 
+	public void onTouch(MotionEvent event)
+	{
+		Rect rect = new Rect(a, b, c, d);
+		if (rect.contains((int) event.getX(), (int) event.getY()))
+		{
+			// postoje dva nacina unosenja, posle prvog rucni i posle treceg
+			// ostali
+
+			int move = Controler.getControler().getBrojBacanja();
+			if (move == 1 && fieldData.getFieldX() / fieldData.getFieldWidth() == 5 && getType() == 2)
+			{
+				fieldData.setFieldValue(fieldData.getSugestion());
+
+				Controler.getControler().setStanje(State.POCETNO_STANJE);
+				Controler.getControler().setBrojBacanja(0);
+				Controler.getControler().getBoard().postInvalidate();
+
+				int numP = Controler.getControler().getNumOfPlayers();
+				int playerNum = Controler.getControler().getPlayerNumber();
+				playerNum++;
+				if (playerNum > numP)
+				{
+					playerNum = 1;
+				}
+				SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
+				Controler.getControler().setPlayerNumber(playerNum);
+				switch (playerNum)
+				{
+				case 1:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC1, ""));
+					break;
+				case 2:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC2, ""));
+					break;
+				case 3:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC3, ""));
+					break;
+				case 4:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC4, ""));
+					break;
+
+				}
+				Toast.makeText(this.getContext(), "Uspesno ste uneli vrednost", Toast.LENGTH_LONG).show();
+
+				new GameProgress().execute();
+
+			} else if (move == 3 && getType() == 2 && fieldData.getSugestion() != -1 && fieldData.getFieldValue() == -1)
+			{
+
+				fieldData.setFieldValue(fieldData.getSugestion());
+				Controler.getControler().setStanje(State.POCETNO_STANJE);
+				Controler.getControler().setBrojBacanja(0);
+				Controler.getControler().getBoard().postInvalidate();
+				int numP = Controler.getControler().getNumOfPlayers();
+				int playerNum = Controler.getControler().getPlayerNumber();
+				playerNum++;
+				if (playerNum > numP)
+				{
+					playerNum = 1;
+				}
+				SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
+				Controler.getControler().setPlayerNumber(playerNum);
+				switch (playerNum)
+				{
+				case 1:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC1, ""));
+					break;
+				case 2:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC2, ""));
+					break;
+				case 3:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC3, ""));
+					break;
+				case 4:
+					Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC4, ""));
+					break;
+
+				}
+				Toast.makeText(this.getContext(), "Uspesno ste uneli vrednost", Toast.LENGTH_LONG).show();
+
+				new GameProgress().execute();
+
+			}
+
+		}
+
+	}
+
+	public int getType()
+	{
+		return type;
+	}
+
+	public void setType(int type)
+	{
+		this.type = type;
+	}
 }

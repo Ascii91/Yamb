@@ -1,11 +1,11 @@
 package com.etf.model;
 
-import com.etf.utils.Constants;
-
 import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
+
+import com.etf.utils.Constants;
 
 public class FieldData
 {
@@ -17,7 +17,6 @@ public class FieldData
 	private int fieldY;
 	private int fieldValue = -1;
 	private int sugestion = -1;
-	
 
 	public FieldData(Context context, int fieldX, int fieldY)
 	{
@@ -28,7 +27,7 @@ public class FieldData
 		int width = size.x;
 		int height = size.y;
 		fieldWidth = width / Constants.FIELDS_HORISONTAL;
-		fieldHeight = height / Constants.FIELDS_VERTICAL ;
+		fieldHeight = height / Constants.FIELDS_VERTICAL;
 
 		this.context = context;
 		this.fieldX = fieldX * fieldWidth;

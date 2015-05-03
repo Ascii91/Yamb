@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.etf.controller.Controler;
+import com.etf.controller.GameProgress;
 import com.etf.utils.Constants;
 import com.etf.utils.DiceRoller;
 import com.etf.yamb.R;
@@ -104,10 +105,10 @@ public class Dices extends ImageView
 		Controler.getControler().setBrojBacanja(brojBacanja);
 		Controler.getControler().setValues(values);
 
-		Toast.makeText(this.getContext(), "ZBIR: " + values[0] + values[1] + values[2] + values[3] + values[4] + values[5], Toast.LENGTH_LONG).show();
 		synchronized (this)
 		{
-			notifyAll();
+			// notifyAll();
+			new GameProgress().execute();
 		}
 
 	}
@@ -127,15 +128,16 @@ public class Dices extends ImageView
 
 					if (!stopShaking)
 					{
-						Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-						v.vibrate(1);
+						// Vibrator v = (Vibrator)
+						// board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+						// v.vibrate(1);
 						values[dice] = (int) ((Math.random() * 6) + 1);
 						animateDice(dice);
 					}
 					board.postInvalidate();
 
 				}
-			}, 160);
+			}, 70);
 
 		}
 		{
@@ -365,5 +367,11 @@ public class Dices extends ImageView
 
 		}
 
+	}
+
+	public void reset()
+	{
+		values = new int[6];
+		selected = new boolean[6];
 	}
 }
