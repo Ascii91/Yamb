@@ -17,7 +17,7 @@ public class Controler
 	private String playerName;
 	private int playerNumber;
 	private int numOfPlayers;
-	
+	private boolean isNajava;
 	
 	
 	
@@ -137,6 +137,16 @@ public class Controler
 	public void setNumOfPlayers(int num)
 	{
 		this.numOfPlayers = num;
+	}
+
+	public boolean isNajava()
+	{
+		return isNajava;
+	}
+
+	public void setNajava(boolean isNajava)
+	{
+		this.isNajava = isNajava;
 	}
 
 }
