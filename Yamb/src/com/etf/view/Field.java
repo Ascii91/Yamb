@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.etf.controller.Controler;
 import com.etf.controller.GameProgress;
-import com.etf.controller.State;
 import com.etf.model.FieldData;
 import com.etf.utils.Constants;
+import com.etf.utils.State;
 import com.etf.yamb.R;
 
 public class Field extends ImageView

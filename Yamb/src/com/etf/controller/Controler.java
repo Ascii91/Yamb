@@ -1,6 +1,7 @@
 package com.etf.controller;
 
 import com.etf.fragments.GameFragment;
+import com.etf.utils.State;
 import com.etf.view.Board;
 
 public class Controler

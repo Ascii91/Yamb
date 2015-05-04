@@ -68,6 +68,8 @@ public class MainActivity extends FragmentActivity
 		}
 	}
 
+	
+	
 	private void replaceFragment(Fragment fragment)
 	{
 
