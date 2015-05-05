@@ -118,7 +118,7 @@ public class Board extends ImageView implements OnTouchListener
 			f.draw(canvas);
 
 		}
-
+//iscrtavanje kockica i scorea
 		getDices().draw(canvas);
 		txtPaint.setColor(Color.BLUE);
 		txtPaint.setTextSize(38);

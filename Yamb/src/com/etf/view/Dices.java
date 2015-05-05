@@ -134,14 +134,14 @@ public class Dices extends ImageView
 						values[dice] = (int) ((Math.random() * 6) + 1);
 						animateDice(dice);
 					}
-					board.postInvalidate();
+					board.invalidate();
 
 				}
 			}, 70);
 
 		}
 		{
-			board.postInvalidate();
+			board.invalidate();
 		}
 	}
 
@@ -355,12 +355,12 @@ public class Dices extends ImageView
 				{
 					Log.e("DESELECT", "" + i);
 					selected[i] = false;
-					board.postInvalidate();
+					board.invalidate();
 				} else
 				{
 					selected[i] = true;
 
-					board.postInvalidate();
+					board.invalidate();
 				}
 				break;
 			}
