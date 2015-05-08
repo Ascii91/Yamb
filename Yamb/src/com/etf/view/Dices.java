@@ -10,12 +10,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.etf.controller.Controler;
 import com.etf.controller.GameProgress;
@@ -48,7 +46,9 @@ public class Dices extends ImageView
 	private DiceRoller diceRoller;
 	private int[] values = new int[6];
 	private boolean[] selected = new boolean[6];
-
+	private int diceWidth;
+	
+	
 	private Board board;
 
 	public Dices(Context context)
@@ -162,7 +162,7 @@ public class Dices extends ImageView
 		int width = size.x;
 		int height = size.y;
 
-		int diceWidth = (width - margin) / 6; // sirina kockice, ista ce biti i
+	    diceWidth = (width - margin) / 6; // sirina kockice, ista ce biti i
 												// visina
 		this.startY = (height / (Constants.FIELDS_VERTICAL)) * (Constants.FIELDS_VERTICAL) - diceWidth - margin;
 
@@ -352,8 +352,7 @@ public class Dices extends ImageView
 			if (diceRect.contains(clickedX, clickedY))
 			{
 				if (selected[i])
-				{
-					Log.e("DESELECT", "" + i);
+                {
 					selected[i] = false;
 					board.invalidate();
 				} else
@@ -374,4 +373,14 @@ public class Dices extends ImageView
 		values = new int[6];
 		selected = new boolean[6];
 	}
+
+    public int getDiceWidth()
+    {
+        return diceWidth;
+    }
+
+    public void setDiceWidth(int diceWidth)
+    {
+        this.diceWidth = diceWidth;
+    }
 }

@@ -112,8 +112,7 @@ public class Field extends ImageView
         super.onDraw(canvas);
         paint.setTextSize(42);
         int cc = paint.getColor();
-       
-        
+
         if (getType() != -1) // polja sa tipom -1 su prazna polja, to su praznine na tabli
         {
             // Cuvamo boju da bismo je posle restore-ovali
@@ -121,9 +120,10 @@ public class Field extends ImageView
             if (getType() == 2) // Ovo su polja u koja mi upisujemo vrednost
             {
 
-                // Upisujemo sugestivnu vrednost
+                // Upisujemo sugestivnu vrednost // ako postoji predlog i ako nije upisana vrednost polje i ako nije najava ispisujemo predlg
                 if (fieldData.getSugestion() >= 0 && fieldData.getFieldValue() == -1 && fieldData.isNajava() == false)
                 {
+
                     paint.setStyle(Style.FILL);
                     paint.setColor(getHighlightColor());
                     canvas.drawRect(a + 3, b + 3, c - 3, d - 3, paint);
@@ -132,9 +132,13 @@ public class Field extends ImageView
                             fieldData.getFieldY() + 2 * fieldData.getFieldHeight() / 3, paint);
 
                 }
-                // upisujemo vrednost polja
+                // upisujemo vrednost polja // ovo su polja koja imaju stalnu vrednost (vec popunjena )
                 else if (fieldData.getFieldValue() != -1)
                 {
+                    // if (Controler.getControler().isNajava())
+                    // {
+                    // Controler.getControler().getBoard().resetNajava();
+                    // }
                     paint.setTextSize(42);
                     paint.setStrokeWidth(3);
                     paint.setColor(Color.BLACK);
@@ -147,19 +151,30 @@ public class Field extends ImageView
                     paint.setStyle(Style.FILL);
                     paint.setColor(getHighlightColor());
                     canvas.drawRect(a + 3, b + 3, c - 3, d - 3, paint);
-
                     paint.setColor(0x3fff0000);
-                    if (fieldData.getSugestion() == -1) fieldData.setSugestion(0);
+                    if (fieldData.getSugestion() == -1)
+                    {
+                        fieldData.setSugestion(0);
+                    }
                     canvas.drawText("" + fieldData.getSugestion(), fieldData.getFieldX() + fieldData.getFieldWidth() / 3,
                             fieldData.getFieldY() + 2 * fieldData.getFieldHeight() / 3, paint);
                 }
 
             }
-
+            else if (getType() == 1 && fieldData.getFieldValue() >= 0)
+            {
+                paint.setTextSize(42);
+                paint.setStrokeWidth(3);
+                paint.setColor(Color.BLUE);
+                canvas.drawText("" + fieldData.getFieldValue(), fieldData.getFieldX() + fieldData.getFieldWidth() / 5,
+                        fieldData.getFieldY() + 2 * fieldData.getFieldHeight() / 3, paint);
+            }
+            // ovo je border oko polja
             paint.setStyle(Style.STROKE);
             paint.setColor(cc);
             canvas.drawRect(a, b, c, d, paint);
 
+            // ovo je slicica
             if (fieldBitmap != null)
             {
                 canvas.drawBitmap(fieldBitmap, fieldData.getFieldX() + fieldData.getFieldWidth() / 2 - fieldBitmap.getWidth() / 2, fieldData.getFieldY(), null);
@@ -296,26 +311,23 @@ public class Field extends ImageView
         Rect rect = new Rect(a, b, c, d);
         if (rect.contains((int) event.getX(), (int) event.getY()))
         {
-            // postoje dva nacina unosenja, posle prvog rucni i posle treceg
-            // ostali
-
             int move = Controler.getControler().getBrojBacanja();
-
+            // u pitanju je najava
             if (move == 1 && fieldData.getFieldX() / fieldData.getFieldWidth() == 6 && getType() == 2 && fieldData.getFieldValue() == -1)// najava
             {
 
-                Toast.makeText(this.getContext(), "Uspesna najava", Toast.LENGTH_SHORT).show();
                 Controler.getControler().setNajava(true);
                 Controler.getControler().getBoard().resetNajava();
                 fieldData.setNajava(true);
 
-                // Controler.getControler().setBrojBacanja(2);
-                Controler.getControler().getBoard().invalidate();
                 new GameProgress().execute();
+                Controler.getControler().getBoard().invalidate();
+
             }
 
             else if (move == 1 && fieldData.getFieldX() / fieldData.getFieldWidth() == 5 && getType() == 2)
             {
+                Controler.getControler().setNajava(false);
                 fieldData.setFieldValue(fieldData.getSugestion());
 
                 Controler.getControler().setStanje(State.POCETNO_STANJE);
@@ -355,6 +367,8 @@ public class Field extends ImageView
             else if (move == 3 && getType() == 2 && fieldData.getSugestion() != -1 && fieldData.getFieldValue() == -1)
             {
                 Controler.getControler().setNajava(false);
+                // Controler.getControler().getBoard().resetNajava();
+
                 fieldData.setFieldValue(fieldData.getSugestion());
                 Controler.getControler().setStanje(State.POCETNO_STANJE);
                 Controler.getControler().setBrojBacanja(0);

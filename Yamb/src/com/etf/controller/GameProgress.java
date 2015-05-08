@@ -1,14 +1,12 @@
 package com.etf.controller;
 
-import android.os.AsyncTask;
-
 import com.etf.utils.State;
 import com.etf.view.Board;
 
-public class GameProgress extends AsyncTask<Void, Void, Void>
+public class GameProgress //extends AsyncTask<Void, Void, Void>
 {
 
-	@Override
+//	@Override
 	protected Void doInBackground(Void... params)
 	{
 
@@ -51,6 +49,10 @@ public class GameProgress extends AsyncTask<Void, Void, Void>
 		}
 		return null;
 
+	}
+	public void execute()
+	{
+	    doInBackground();
 	}
 
 }

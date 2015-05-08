@@ -6,16 +6,15 @@ import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.etf.utils.Constants;
@@ -267,11 +266,11 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 		saveToPrefs(Constants.IGRA, Constants.IGRAC3, pl3Name);
 		saveToPrefs(Constants.IGRA, Constants.IGRAC4, pl4Name);
 
-		Log.e("Broj igraca", "" + brojIgraca);
-		Log.e("player1", "" + pl1Name);
-		Log.e("player2", "" + pl2Name);
-		Log.e("player3", "" + pl3Name);
-		Log.e("player4", "" + pl4Name);
+//		Log.e("Broj igraca", "" + brojIgraca);
+//		Log.e("player1", "" + pl1Name);
+//		Log.e("player2", "" + pl2Name);
+//		Log.e("player3", "" + pl3Name);
+//		Log.e("player4", "" + pl4Name);
 
 		FragmentManager fm = this.getFragmentManager();
 		Fragment fragment = new GameFragment();

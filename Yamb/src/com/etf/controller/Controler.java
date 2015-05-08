@@ -6,147 +6,191 @@ import com.etf.view.Board;
 
 public class Controler
 {
-	private static Controler controler;
-	private boolean shakingInProgress;
-	private Board board;
-	private State stanje = State.POCETNO_STANJE;
-	private GameFragment gameFragment;
-	private int brojBacanja;
-	private int[] values = new int[6];
-	
-	private String playerName;
-	private int playerNumber;
-	private int numOfPlayers;
-	private boolean isNajava;
-	
-	
-	
-	
-	public int getNumOfPlayers()
-	{
-		return numOfPlayers;
-	}
+    private static Controler controler;
+    private boolean          shakingInProgress;
+    private Board            board;
+    private State            stanje = State.POCETNO_STANJE;
+    private GameFragment     gameFragment;
+    private int              brojBacanja;
+    private int[]            values = new int[6];
 
-	public Board getBoard()
-	{
-		return board;
-	}
+    private String           playerName;
+    private int              playerNumber;
+    private int              numOfPlayers;
+    private boolean          isNajava;
+    private int              score  = 0;
 
-	public static void setControler(Controler controler)
-	{
-		Controler.controler = controler;
-	}
+    public int getNumOfPlayers()
+    {
+        return numOfPlayers;
+    }
 
-	public void stopShaking()
-	{
-		setShakingInProgress(false);
-	}
+    public Board getBoard()
+    {
+        return board;
+    }
 
-	public static Controler getControler()
-	{
-		if (controler == null)
-		{
-			controler = new Controler();
-		}
-		return controler;
-	}
+    public static void setControler(Controler controler)
+    {
+        Controler.controler = controler;
+    }
 
-	public boolean isShakingInProgress()
-	{
-		return shakingInProgress;
-	}
+    public void stopShaking()
+    {
+        setShakingInProgress(false);
+    }
 
-	public void setShakingInProgress(boolean shakingInProgress)
-	{
-		this.shakingInProgress = shakingInProgress;
-	}
+    public static Controler getControler()
+    {
+        if (controler == null)
+        {
+            controler = new Controler();
+        }
+        return controler;
+    }
 
-	public void initAndStartGame()
-	{
+    public boolean isShakingInProgress()
+    {
+        return shakingInProgress;
+    }
 
-		new GameProgress().execute();
+    public void setShakingInProgress(boolean shakingInProgress)
+    {
+        this.shakingInProgress = shakingInProgress;
+    }
 
-	}
+    public void initAndStartGame()
+    {
 
-	public State getStanje()
-	{
-		return stanje;
-	}
+        new GameProgress().execute();
 
-	public void setStanje(State stanje)
-	{
-		this.stanje = stanje;
-	}
+    }
 
-	public void setBoard(Board board)
-	{
-		this.board = board;
+    public State getStanje()
+    {
+        return stanje;
+    }
 
-	}
+    public void setStanje(State stanje)
+    {
+        this.stanje = stanje;
+    }
 
-	public GameFragment getGameFragment()
-	{
-		return gameFragment;
-	}
+    public void setBoard(Board board)
+    {
+        this.board = board;
 
-	public void setGameFragment(GameFragment gameFragment)
-	{
-		this.gameFragment = gameFragment;
-	}
+    }
 
-	public int getBrojBacanja()
-	{
-		return brojBacanja;
-	}
+    public GameFragment getGameFragment()
+    {
+        return gameFragment;
+    }
 
-	public void setBrojBacanja(int brojBacanja)
-	{
-		this.brojBacanja = brojBacanja;
-	}
+    public void setGameFragment(GameFragment gameFragment)
+    {
+        this.gameFragment = gameFragment;
+    }
 
-	public int[] getValues()
-	{
-		return values;
-	}
+    public int getBrojBacanja()
+    {
+        return brojBacanja;
+    }
 
-	public void setValues(int[] values)
-	{
-		this.values = values;
-	}
+    public void setBrojBacanja(int brojBacanja)
+    {
+        this.brojBacanja = brojBacanja;
+    }
 
-	public int getPlayerNumber()
-	{
-		return playerNumber;
-	}
+    public int[] getValues()
+    {
+        return values;
+    }
 
-	public void setPlayerNumber(int playerNumber)
-	{
-		this.playerNumber = playerNumber;
-	}
+    public void setValues(int[] values)
+    {
+        this.values = values;
+    }
 
-	public String getPlayerName()
-	{
-		return playerName;
-	}
+    public int getPlayerNumber()
+    {
+        return playerNumber;
+    }
 
-	public void setPlayerName(String playerName)
-	{
-		this.playerName = playerName;
-	}
+    public void setPlayerNumber(int playerNumber)
+    {
+        // cuvamo stari score
+        switch (this.getPlayerNumber())
+        {
 
-	public void setNumOfPlayers(int num)
-	{
-		this.numOfPlayers = num;
-	}
+            case 1 :
+                board.setPlayer1Score(score);
+                break;
+            case 2 :
+                board.setPlayer2Score(score);
+                break;
+            case 3 :
+                board.setPlayer3Score(score);
+                break;
+            case 4 :
+                board.setPlayer4Score(score);
+                break;
 
-	public boolean isNajava()
-	{
-		return isNajava;
-	}
+        }
 
-	public void setNajava(boolean isNajava)
-	{
-		this.isNajava = isNajava;
-	}
+        switch (playerNumber)
+        {
+            case 1 :
+                score = board.getPlayer1Score();
+                break;
+            case 2 :
+                score = board.getPlayer2Score();
+                break;
+            case 3 :
+                score = board.getPlayer3Score();
+                break;
+            case 4 :
+                score = board.getPlayer4Score();
+                break;
+
+        }
+
+        this.playerNumber = playerNumber;
+    }
+
+    public String getPlayerName()
+    {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName)
+    {
+        this.playerName = playerName;
+    }
+
+    public void setNumOfPlayers(int num)
+    {
+        this.numOfPlayers = num;
+    }
+
+    public boolean isNajava()
+    {
+        return isNajava;
+    }
+
+    public void setNajava(boolean isNajava)
+    {
+        this.isNajava = isNajava;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 
 }
