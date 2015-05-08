@@ -48,7 +48,7 @@ public class Field extends ImageView
 
         // podesavamo parametre za iscrtavanje polja na tabli
 
-        if (type == 0) // okvir polja
+        if (type == 0 || ((fieldData.getFieldY() == 0) && ((fieldData.getFieldX() / fieldData.getFieldWidth()) == 7))) // okvir polja
         {
 
             setBitmapByNumber(fieldData.getFieldX(), fieldData.getFieldY());
@@ -97,6 +97,10 @@ public class Field extends ImageView
                     break;
                 case 6 :
                     setFieldBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow_bell));
+                    break;
+                case 7 :
+                    setType(0);
+                    setFieldBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.settings_iccon));
                     break;
             }
         }

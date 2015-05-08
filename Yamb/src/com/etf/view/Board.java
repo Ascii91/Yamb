@@ -187,13 +187,11 @@ public class Board extends ImageView implements OnTouchListener
             {
 
                 Controler.getControler().getBoard().enableShaking();
-                synchronized (this)
-                {
-                    // notifyAll();
+    
                     invalidate();
                     new GameProgress().execute();
 
-                }
+                
 
             }
         });
