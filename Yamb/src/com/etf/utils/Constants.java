@@ -11,4 +11,8 @@ public class Constants
 	public static final int FIELDS_HORISONTAL = 8;
 	public static final int FIELDS_VERTICAL = 20;
 	public static final int[] NO_VALUE_FIELDS = {};
+	public static final String SETTINGS = "settings";
+	public static final String OSETLJIVOST = "osetljivost";
+	public static final String ZVUK = "zvuk";
+
 }

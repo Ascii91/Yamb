@@ -806,7 +806,7 @@ public class Calculator
         }
         suma1Total = suma1Down + suma1UpDown + suma1Up + suma1MiddleUpDown + suma1Hand + suma1Bell;
         suma2Total = suma2Down + suma2UpDown + suma2Up + suma2MiddleUpDown + suma2Hand + suma2Bell;
-        suma3Total = suma3Down + suma2UpDown + suma2Up + suma2MiddleUpDown + suma2Hand + suma2Bell;
+        suma3Total = suma3Down + suma3UpDown + suma3Up + suma3MiddleUpDown + suma3Hand + suma3Bell;
 
         Controler.getControler().setScore(suma1Total + suma2Total + suma3Total);
 

@@ -3,6 +3,7 @@ package com.etf.controller;
 import com.etf.fragments.GameFragment;
 import com.etf.utils.State;
 import com.etf.view.Board;
+import com.etf.view.Dices;
 
 public class Controler
 {
@@ -19,7 +20,9 @@ public class Controler
     private int              numOfPlayers;
     private boolean          isNajava;
     private int              score  = 0;
-
+    private Dices dices;
+    
+    
     public int getNumOfPlayers()
     {
         return numOfPlayers;
@@ -192,5 +195,15 @@ public class Controler
     {
         this.score = score;
     }
+
+	public Dices getDices()
+	{
+		return dices;
+	}
+
+	public void setDices(Dices dices)
+	{
+		this.dices = dices;
+	}
 
 }

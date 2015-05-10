@@ -25,6 +25,7 @@ public class ShakeEventManager implements SensorEventListener
 	private ShakeListener listener;
 	private boolean shakeInProgres = false;
 	private int counter2 = 0;
+	private Context context;
 
 	public ShakeEventManager()
 	{
@@ -37,6 +38,7 @@ public class ShakeEventManager implements SensorEventListener
 
 	public void init(Context ctx)
 	{
+		this.setContext(ctx);
 		sManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
 		s = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -70,12 +72,11 @@ public class ShakeEventManager implements SensorEventListener
 				{
 
 					counter++;
-					// listener.onShake();
+
 				} else
 				{
 					if (!shakeInProgres)
 					{
-						// Log.e("Zapoceto Muckanje", "true");
 						shakeInProgres = true;
 						listener.onShake();
 					}
@@ -88,7 +89,7 @@ public class ShakeEventManager implements SensorEventListener
 			if (shakeInProgres)
 			{
 				counter2++;
-
+	
 				if (counter2 > 3)
 				{
 					resetAllData();
@@ -149,6 +150,16 @@ public class ShakeEventManager implements SensorEventListener
 		shakeInProgres = false;
 		listener.onStopShaking();
 
+	}
+
+	public Context getContext()
+	{
+		return context;
+	}
+
+	public void setContext(Context context)
+	{
+		this.context = context;
 	}
 
 	public static interface ShakeListener

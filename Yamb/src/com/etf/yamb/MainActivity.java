@@ -52,7 +52,9 @@ public class MainActivity extends FragmentActivity
         FragmentManager fm = getFragmentManager();
 
         Fragment fragment = fm.findFragmentByTag("game");
-        if (fragment != null)
+        
+        
+        if (fragment != null && fragment.isResumed())
         {
             ((GameFragment) fragment).onBackPressed();
         }
