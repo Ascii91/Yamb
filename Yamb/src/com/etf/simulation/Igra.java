@@ -1,5 +1,6 @@
 package com.etf.simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Igra
@@ -15,10 +16,10 @@ public class Igra
     private int           brojIgraca;
     private List<Bacanje> lista;
 
-    public Igra(int rb, String pl1, String pl2, String pl3, String pl4, long vreme, int trajanje, int brojIgraca, List<Bacanje> lista)
+    public Igra(String pl1, String pl2, String pl3, String pl4, long vreme, int trajanje, int brojIgraca)
     {
         super();
-        this.rb = rb;
+
         this.pl1 = pl1;
         this.pl2 = pl2;
         this.pl3 = pl3;
@@ -26,7 +27,7 @@ public class Igra
         this.vreme = vreme;
         this.trajanje = trajanje;
         this.brojIgraca = brojIgraca;
-        this.lista = lista;
+        lista = new ArrayList<Bacanje>();
     }
 
     public int getRb()
@@ -117,6 +118,21 @@ public class Igra
     public void setLista(List<Bacanje> lista)
     {
         this.lista = lista;
+    }
+
+    @Override
+    public String toString()
+    {
+
+        String str = pl1 + " " + pl2 + " " + pl3 + " " + pl4 + " " + trajanje + " " + vreme + " " + brojIgraca;
+
+        for (Bacanje b : lista)
+        {
+            str += b.getBacanje1() + " " + b.getBacanje2() + " " + b.getBacanje3() + " " + b.getIgrac() + " " + b.getX() + " " + b.getY() + " " + b.getValue()
+                    + " " + b.getSelected1() + " " + b.getSelected2();
+        }
+        str += '\n';
+        return str;
     }
 
 }

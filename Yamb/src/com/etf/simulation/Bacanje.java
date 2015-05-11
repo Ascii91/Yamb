@@ -4,7 +4,6 @@ public class Bacanje
 {
     private int    brojPartije;
     private String igrac;
-    private int    rbBacanja;
     private String bacanje1;
     private String bacanje2;
     private String bacanje3;
@@ -14,12 +13,13 @@ public class Bacanje
     private String selected1;
     private String selected2;
 
-    public Bacanje(int brojPartije, String igrac, int rbBacanja, String bacanje1, String bacanje2, String bacanje3, int x, int y, int value, String selected1, String selected2)
+    public Bacanje(){}
+    
+    public Bacanje(int brojPartije, String igrac, String bacanje1, String bacanje2, String bacanje3, int x, int y, int value, String selected1, String selected2)
     {
         super();
         this.brojPartije = brojPartije;
         this.igrac = igrac;
-        this.rbBacanja = rbBacanja;
         this.bacanje1 = bacanje1;
         this.bacanje2 = bacanje2;
         this.bacanje3 = bacanje3;
@@ -50,15 +50,6 @@ public class Bacanje
         this.igrac = igrac;
     }
 
-    public int getRbBacanja()
-    {
-        return rbBacanja;
-    }
-
-    public void setRbBacanja(int rbBacanja)
-    {
-        this.rbBacanja = rbBacanja;
-    }
 
     public String getBacanje1()
     {

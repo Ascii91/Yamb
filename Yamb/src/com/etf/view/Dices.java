@@ -84,22 +84,22 @@ public class Dices extends ImageView
 		shouldPlay = prefs.getBoolean(Constants.ZVUK, true);
 
 		stopShaking = false;
-		if (!selected[0])
+		if (!getSelected()[0])
 			animateDice(0);
 
-		if (!selected[1])
+		if (!getSelected()[1])
 			animateDice(1);
 
-		if (!selected[2])
+		if (!getSelected()[2])
 			animateDice(2);
 
-		if (!selected[3])
+		if (!getSelected()[3])
 			animateDice(3);
 
-		if (!selected[4])
+		if (!getSelected()[4])
 			animateDice(4);
 
-		if (!selected[5])
+		if (!getSelected()[5])
 			animateDice(5);
 
 	}
@@ -259,21 +259,21 @@ public class Dices extends ImageView
 
 		try
 		{
-			if (!selected[0])
+			if (!getSelected()[0])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[0]), startX + margin, startY, null);
 			} else
 			{
 				canvas.drawBitmap(getSelectedBitmapByNumber(values[0]), startX + margin, startY, null);
 			}
-			if (!selected[1])
+			if (!getSelected()[1])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[1]), startX + one.getWidth() + margin, startY, null);
 			} else
 			{
 				canvas.drawBitmap(getSelectedBitmapByNumber(values[1]), startX + one.getWidth() + margin, startY, null);
 			}
-			if (!selected[2])
+			if (!getSelected()[2])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[2]), startX + 2 * one.getWidth() + margin, startY, null);
 
@@ -281,14 +281,14 @@ public class Dices extends ImageView
 			{
 				canvas.drawBitmap(getSelectedBitmapByNumber(values[2]), startX + 2 * one.getWidth() + margin, startY, null);
 			}
-			if (!selected[3])
+			if (!getSelected()[3])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[3]), startX + 3 * one.getWidth() + margin, startY, null);
 			} else
 			{
 				canvas.drawBitmap(getSelectedBitmapByNumber(values[3]), startX + 3 * one.getWidth() + margin, startY, null);
 			}
-			if (!selected[4])
+			if (!getSelected()[4])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[4]), startX + 4 * one.getWidth() + margin, startY, null);
 			} else
@@ -296,7 +296,7 @@ public class Dices extends ImageView
 
 				canvas.drawBitmap(getSelectedBitmapByNumber(values[4]), startX + 4 * one.getWidth() + margin, startY, null);
 			}
-			if (!selected[5])
+			if (!getSelected()[5])
 			{
 				canvas.drawBitmap(getBitmapByNumber(values[5]), startX + 5 * one.getWidth() + margin, startY, null);
 
@@ -368,13 +368,13 @@ public class Dices extends ImageView
 			Rect diceRect = new Rect(measure, startY, measure + bitmapWidth, startY + bitmapHeight);
 			if (diceRect.contains(clickedX, clickedY))
 			{
-				if (selected[i])
+				if (getSelected()[i])
 				{
-					selected[i] = false;
+					getSelected()[i] = false;
 					board.invalidate();
 				} else
 				{
-					selected[i] = true;
+					getSelected()[i] = true;
 
 					board.invalidate();
 				}
@@ -388,7 +388,7 @@ public class Dices extends ImageView
 	public void reset()
 	{
 		values = new int[6];
-		selected = new boolean[6];
+		setSelected(new boolean[6]);
 	}
 
 	public int getDiceWidth()
@@ -410,4 +410,14 @@ public class Dices extends ImageView
 	{
 		this.mp = mp;
 	}
+
+    public boolean[] getSelected()
+    {
+        return selected;
+    }
+
+    public void setSelected(boolean[] selected)
+    {
+        this.selected = selected;
+    }
 }

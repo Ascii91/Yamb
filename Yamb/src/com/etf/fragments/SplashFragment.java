@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.etf.controller.Controler;
 import com.etf.utils.Constants;
 import com.etf.yamb.R;
 
@@ -133,7 +134,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 		switch (v.getId())
 		{
 		case R.id.button_igraj:
-
+		    Controler.getControler().resetControler();
 			openPlayerSelectDialog();
 			break;
 		case R.id.button_podesavanja:
@@ -266,11 +267,6 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 		saveToPrefs(Constants.IGRA, Constants.IGRAC3, pl3Name);
 		saveToPrefs(Constants.IGRA, Constants.IGRAC4, pl4Name);
 
-//		Log.e("Broj igraca", "" + brojIgraca);
-//		Log.e("player1", "" + pl1Name);
-//		Log.e("player2", "" + pl2Name);
-//		Log.e("player3", "" + pl3Name);
-//		Log.e("player4", "" + pl4Name);
 
 		FragmentManager fm = this.getFragmentManager();
 		Fragment fragment = new GameFragment();

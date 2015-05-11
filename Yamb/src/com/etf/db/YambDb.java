@@ -23,10 +23,10 @@ public class YambDb
                                                                       + "vreme long not null," + "trajanje long  null," + "broj_igraca integer not null)";
 
     private static final String DATABASE_CREATE_BACANJE_TABLE = "create table igra (id integer primary key autoincrement, " + "rb integer not null,"
-                                                                      + "igrac text not null," + "broj_bacanja integer not null,"
-                                                                      + "rb_bacanja integer not null," + "bacanje1 text not null," + "bacanje2 text not null,"
-                                                                      + "bacanje3 text not null," + "x integer not null," + "y integer not null,"
-                                                                      + "value integer not null," + "selected1 text not null," + "selected2 text not null,)";
+                                                                      + "igrac text not null," + "broj_bacanja integer not null," + "bacanje1 text not null,"
+                                                                      + "bacanje2 text not null," + "bacanje3 text not null," + "x integer not null,"
+                                                                      + "y integer not null," + "value integer not null," + "selected1 text not null,"
+                                                                      + "selected2 text not null,)";
 
     public YambDb(Context context)
     {
@@ -48,6 +48,11 @@ public class YambDb
     public void insertIgra()
     {
 
+    }
+    
+    public int getLastRb()
+    {
+        return 0;
     }
 
     /**

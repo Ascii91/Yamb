@@ -1,6 +1,13 @@
 package com.etf.controller;
 
+import java.util.ArrayList;
+
+import android.content.SharedPreferences;
+
 import com.etf.fragments.GameFragment;
+import com.etf.simulation.Bacanje;
+import com.etf.simulation.Igra;
+import com.etf.utils.Constants;
 import com.etf.utils.State;
 import com.etf.view.Board;
 import com.etf.view.Dices;
@@ -8,6 +15,8 @@ import com.etf.view.Dices;
 public class Controler
 {
     private static Controler controler;
+
+    private Igra             igra;
     private boolean          shakingInProgress;
     private Board            board;
     private State            stanje = State.POCETNO_STANJE;
@@ -25,6 +34,7 @@ public class Controler
     public void resetControler()
     {
         controler = new Controler();
+        igra.setLista(new ArrayList<Bacanje>());
     }
 
     public int getNumOfPlayers()
@@ -68,6 +78,16 @@ public class Controler
 
     public void initAndStartGame()
     {
+        SharedPreferences prefs = getControler().getBoard().getContext().getSharedPreferences(Constants.IGRA, 0);
+        String pl1 = prefs.getString(Constants.IGRAC1, "-");
+        String pl2 = prefs.getString(Constants.IGRAC2, "-");
+        String pl3 = prefs.getString(Constants.IGRAC3, "-");
+        String pl4 = prefs.getString(Constants.IGRAC4, "-");
+        long vreme = System.currentTimeMillis();
+        int trajanje = 0;
+        int brojIgraca = Integer.parseInt(prefs.getString(Constants.BROJ_IGRACA, "1"));
+
+        igra = new Igra(pl1, pl2, pl3, pl4, vreme, trajanje, brojIgraca);
 
         new GameProgress().execute();
 
@@ -208,6 +228,16 @@ public class Controler
     public void setDices(Dices dices)
     {
         this.dices = dices;
+    }
+
+    public Igra getIgra()
+    {
+        return igra;
+    }
+
+    public void setIgra(Igra igra)
+    {
+        this.igra = igra;
     }
 
 }
