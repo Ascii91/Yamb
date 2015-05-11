@@ -3,6 +3,7 @@ package com.etf.db;
 import java.sql.SQLException;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -49,10 +50,18 @@ public class YambDb
     {
 
     }
-    
+
     public int getLastRb()
     {
-        return 0;
+        int lastId = 0;
+        String query = "SELECT ROWID from MYTABLE order by ROWID DESC limit 1";
+        Cursor c = myDatabase.rawQuery(query, null);
+        if (c != null && c.moveToFirst())
+        {
+            lastId = c.getInt(0); // The 0 is the column index, we only have 1 column, so the index is 0
+        }
+
+        return lastId;
     }
 
     /**
