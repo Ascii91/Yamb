@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -52,8 +53,7 @@ public class MainActivity extends FragmentActivity
         FragmentManager fm = getFragmentManager();
 
         Fragment fragment = fm.findFragmentByTag("game");
-        
-        
+
         if (fragment != null && fragment.isResumed())
         {
             ((GameFragment) fragment).onBackPressed();
@@ -102,7 +102,9 @@ public class MainActivity extends FragmentActivity
             }
         }
         catch (Exception e)
-        {}
+        {
+            e.printStackTrace();
+        }
 
         super.onResume();
     }

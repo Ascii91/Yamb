@@ -20,9 +20,13 @@ public class Controler
     private int              numOfPlayers;
     private boolean          isNajava;
     private int              score  = 0;
-    private Dices dices;
-    
-    
+    private Dices            dices;
+
+    public void resetControler()
+    {
+        controler = new Controler();
+    }
+
     public int getNumOfPlayers()
     {
         return numOfPlayers;
@@ -196,14 +200,14 @@ public class Controler
         this.score = score;
     }
 
-	public Dices getDices()
-	{
-		return dices;
-	}
+    public Dices getDices()
+    {
+        return dices;
+    }
 
-	public void setDices(Dices dices)
-	{
-		this.dices = dices;
-	}
+    public void setDices(Dices dices)
+    {
+        this.dices = dices;
+    }
 
 }

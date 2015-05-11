@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -76,7 +77,7 @@ public class Dices extends ImageView
 	public boolean stopShaking = true;
 
 	public void startShaking()
-	{
+	{  
 		setMp(MediaPlayer.create(getContext(), R.raw.roll_dice));
 
 		SharedPreferences prefs = ((Activity) (this.getContext())).getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);

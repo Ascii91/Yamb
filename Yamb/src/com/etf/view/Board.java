@@ -13,7 +13,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -62,19 +61,6 @@ public class Board extends ImageView implements OnTouchListener
 
 	public void initBoard()
 	{
-		if (Controler.getControler().getBoard() != null)
-		{
-			fields = Controler.getControler().getBoard().getFieldsPlayer1();
-			for (Field f : fields)
-			{
-				f.setContext(this.getContext());
-			}
-			// disableShaking();
-			setDices(Controler.getControler().getDices());
-			enableShaking();
-			this.setOnTouchListener(this);
-			return;
-		}
 
 		Controler.getControler().setBoard(this);
 		fields = new ArrayList<Field>();

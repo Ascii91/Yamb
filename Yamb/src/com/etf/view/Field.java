@@ -1,9 +1,11 @@
 package com.etf.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +30,6 @@ import com.etf.yamb.R;
 public class Field extends ImageView
 {
 
-	private Context context;
 	private FieldData fieldData;
 	private Bitmap fieldBitmap;
 	private int highlightColor = 0;
@@ -40,7 +41,6 @@ public class Field extends ImageView
 	public Field(Context context, FieldData fieldData, int type)
 	{
 		super(context);
-		this.setContext(context);
 		this.setFieldData(fieldData);
 		this.setType(type);
 
@@ -368,7 +368,7 @@ public class Field extends ImageView
 					break;
 
 				}
-				Toast.makeText(this.getContext(), "Uspesno ste uneli vrednost", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.getContext(), R.string.uneto_polje, Toast.LENGTH_LONG).show();
 
 				new GameProgress().execute();
 
@@ -406,7 +406,7 @@ public class Field extends ImageView
 					break;
 
 				}
-				Toast.makeText(this.getContext(), "Uspesno ste uneli vrednost", Toast.LENGTH_LONG).show();
+				Toast.makeText(this.getContext(), R.string.uneto_polje, Toast.LENGTH_LONG).show();
 
 				new GameProgress().execute();
 
@@ -416,9 +416,26 @@ public class Field extends ImageView
 			// Settings dugme
 			if (fieldData.getFieldY() == 0 && fieldData.getFieldX() / fieldData.getFieldWidth() == 7)
 			{
-				FragmentManager fm = ((Activity) (Controler.getControler().getBoard().getContext())).getFragmentManager();
-				Fragment fragment = new SettingsFragment();
-				fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
+			    final FragmentManager fm =((Activity)(this.getContext())).getFragmentManager();
+		        new AlertDialog.Builder((Activity)(this.getContext()))
+		        .setTitle(R.string.quit_title)
+		        .setMessage(R.string.warning_message)
+		        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) { 
+		              FragmentManager fm = ((Activity) (Controler.getControler().getBoard().getContext())).getFragmentManager();
+		              Fragment fragment = new SettingsFragment();
+		              fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
+
+		            }
+		         })
+		        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int which) { 
+		                // do nothing
+		            }
+		         })
+		        .setIcon(android.R.drawable.ic_dialog_alert)
+		         .show();
+			    //			    
 
 			}
 
@@ -435,8 +452,5 @@ public class Field extends ImageView
 		this.type = type;
 	}
 
-	public void setContext(Context context)
-	{
-		this.context = context;
-	}
+
 }

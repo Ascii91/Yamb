@@ -10,12 +10,16 @@
     <string name="select_player">Odaberite broj igrača i upišite njihova imena:</string>
     <string name="start_game">OK</string>
     <string name="back">Nazad</string>
-    <string name="igrac1">Igrač 1</string>
+    <string name="save">Sačuvaj</string>
+        <string name="igrac1">Igrač 1</string>
     <string name="igrac2">Igrač 2</string>
     <string name="igrac3">Igrač 3</string>
     <string name="igrac4">Igrač 4</string>
     <string name="minimum_players">Morate selektovati bar jednog igrača</string>
     <string name="quit_title">Upozorenje</string>
     <string name="quit_message">Da li ste sigurni da želite da prekinete igru?</string>
+    <string name="warning_message">Igrica će biti restartovana nakon izmene podešavanja. Da li želite da nastavite?</string>
+    <string name="changes_saved">Podešavanja sačuvana</string>
+    <string name="uneto_polje">Uspešno ste uneli vrednost</string>
 
 </resources>
