@@ -63,7 +63,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.player_number_select_layout);
 
-		cb1 = (CheckBox) dialog.findViewById(R.id.check_box_zvuk);
+		cb1 = (CheckBox) dialog.findViewById(R.id.check_box1);
 		cb2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
 		cb3 = (CheckBox) dialog.findViewById(R.id.checkBox3);
 		cb4 = (CheckBox) dialog.findViewById(R.id.checkBox4);
@@ -159,7 +159,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 		switch (buttonView.getId())
 		{
 
-		case R.id.check_box_zvuk:
+		case R.id.check_box1:
 
 			if (cb1.isChecked())
 			{

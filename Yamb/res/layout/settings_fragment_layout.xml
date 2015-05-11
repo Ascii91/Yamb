@@ -19,7 +19,7 @@
         android:id="@+id/seekBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/check_box_zvuk"
+        android:layout_alignBottom="@+id/check_box1"
         android:layout_marginBottom="49dp"
         android:layout_toLeftOf="@+id/progress_text"
         android:layout_toRightOf="@+id/textView2" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
-        android:layout_alignTop="@+id/check_box_zvuk"
+        android:layout_alignTop="@+id/check_box1"
         android:text="Zvuk ukljucen"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#0000ff" />
@@ -57,7 +57,7 @@
         android:textColor="#0000ff" />
 
     <CheckBox
-        android:id="@+id/check_box_zvuk"
+        android:id="@+id/check_box1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
@@ -73,7 +73,7 @@
         android:layout_alignBaseline="@+id/btn_nazad"
         android:layout_alignBottom="@+id/btn_nazad"
         android:layout_marginLeft="27dp"
-        android:layout_toRightOf="@+id/check_box_zvuk"
+        android:layout_toRightOf="@+id/check_box1"
         android:text="@string/save"
         android:textColor="#ffffff" />
 

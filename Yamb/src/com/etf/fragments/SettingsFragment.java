@@ -45,7 +45,7 @@ public class SettingsFragment extends Fragment implements OnClickListener, OnSee
         sacuvaj = (Button) view.findViewById(R.id.btn_sacuvaj);
         nazad = (Button) view.findViewById(R.id.btn_nazad);
         progressText = (TextView) view.findViewById(R.id.progress_text);
-        cb = (CheckBox) view.findViewById(R.id.check_box_zvuk);
+        cb = (CheckBox) view.findViewById(R.id.check_box1);
 
         sacuvaj.setOnClickListener(this);
         nazad.setOnClickListener(this);
