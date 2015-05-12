@@ -2,8 +2,6 @@ package com.etf.controller;
 
 import java.util.List;
 
-import android.util.Log;
-
 import com.etf.simulation.Bacanje;
 import com.etf.utils.State;
 import com.etf.view.Board;
@@ -53,8 +51,7 @@ public class GameProgress // extends AsyncTask<Void, Void, Void>
 				int[] tempNiz2 = Controler.getControler().getValues().clone();
 				String values2 = "" + tempNiz2[0] + tempNiz2[1] + tempNiz2[2] + tempNiz2[3] + tempNiz2[4] + tempNiz2[5];
 				List<Bacanje> lista2 = Controler.getControler().getIgra().getLista();
-				lista2.get(lista2.size() - 1).setBacanje2(values2); // uneto
-																	// bacanje 2
+				lista2.get(lista2.size() - 1).setBacanje2(values2); 
 				boolean[] tempSelected2 = Controler.getControler().getBoard().getDices().getSelected().clone();
 				String selectedString = "";
 				for (boolean i : tempSelected2)
@@ -71,7 +68,6 @@ public class GameProgress // extends AsyncTask<Void, Void, Void>
 
 				break;
 			case 3:
-				Log.e("third", "f");
 				Board board3 = Controler.getControler().getBoard();
 				board3.disableShaking();
 				board3.colorFields(3);
@@ -103,8 +99,7 @@ public class GameProgress // extends AsyncTask<Void, Void, Void>
 
 		}
 
-		Log.e("RES", "" + Controler.getControler().getIgra().toString());
-		return null;
+	return null;
 
 	}
 

@@ -7,16 +7,15 @@
         android:id="@+id/pozicija"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.25"
         android:paddingLeft="5dp"
         android:text="M"
-        android:layout_weight="0.25"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-   
         android:layout_weight="0.25"
         android:text="M"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -25,7 +24,6 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-     
         android:layout_weight="0.25"
         android:text="M"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -34,7 +32,6 @@
         android:id="@+id/datum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-      
         android:layout_weight="0.25"
         android:text="M"
         android:textAppearance="?android:attr/textAppearanceMedium" />

@@ -10,9 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lin_wraper"
-        >
-       
+        android:layout_below="@+id/lin_wraper" >
     </ListView>
 
     <LinearLayout
@@ -21,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:orientation="horizontal"
-         >
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/textView2"
@@ -30,7 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/pozicija"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0000ff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView3"
@@ -38,7 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="@string/name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0000ff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView4"
@@ -47,7 +48,9 @@
             android:layout_marginLeft="41dp"
             android:layout_weight="0.25"
             android:text="@string/rezultat"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0000ff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView5"
@@ -56,7 +59,9 @@
             android:layout_marginRight="18dp"
             android:layout_weight="0.25"
             android:text="@string/datum"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#0000ff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -66,6 +71,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/rezultati"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#0000ff"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -270,7 +270,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
 
 		FragmentManager fm = this.getFragmentManager();
 		Fragment fragment = new GameFragment();
-		fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment, "game").commit();
+		fm.beginTransaction().addToBackStack(null).replace(R.id.container, fragment, "game").commit();
 
 	}
 

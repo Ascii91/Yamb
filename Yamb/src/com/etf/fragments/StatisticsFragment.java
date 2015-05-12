@@ -2,6 +2,7 @@ package com.etf.fragments;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Fragment;
@@ -22,140 +23,145 @@ import com.etf.yamb.R;
 
 public class StatisticsFragment extends Fragment implements ListAdapter
 {
-	private View view;
-	private ListView lv;
-	List<Igra> igre;
-	List<ListObject> objectList;
+    private View     view;
+    private ListView lv;
+    List<Igra>       igre;
+    List<ListObject> objectList;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		super.onCreateView(inflater, container, savedInstanceState);
-		view = inflater.inflate(R.layout.statistics_fragment_layout, container, false);
-		lv = (ListView) view.findViewById(R.id.list_view_statistics);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.statistics_fragment_layout, container, false);
+        lv = (ListView) view.findViewById(R.id.list_view_statistics);
 
-		YambDb yb = new YambDb(getActivity());
+        YambDb yb = new YambDb(getActivity());
 
-		igre = yb.getIgre();
-		objectList = new ArrayList<ListObject>();
+        igre = yb.getIgre();
+        objectList = new ArrayList<ListObject>();
 
-		Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
-		for (Igra i : igre)
-		{
-			calendar.setTimeInMillis(i.getVreme());
-			int mYear = calendar.get(Calendar.YEAR);
-			int mMonth = calendar.get(Calendar.MONTH);
-			int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        for (Igra i : igre)
+        {
+            calendar.setTimeInMillis(i.getVreme());
+            int mYear = calendar.get(Calendar.YEAR);
+            int mMonth = calendar.get(Calendar.MONTH);
+            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-			ListObject lo = new ListObject();
-			lo.setDate("" + mDay + "-" + mMonth + "-" + mYear);
-			lo.setName("" + i.getPl1());
-			lo.setPosition("2");
-			lo.setScore("SCORE");
+            ListObject lo = new ListObject();
+            lo.setDate("" + mDay + "." + mMonth + "." + mYear);
+            lo.setName("" + i.getWinnerName());
+            lo.setScore(i.getWinnerScore());
 
-			objectList.add(lo);
-		}
+            objectList.add(lo);
+        }
+        Collections.sort(objectList);
 
-		lv.setAdapter(this);
+        for (int i = 0; i < objectList.size(); i++)
+        {
+            objectList.get(i).setPosition("" + (i+1));
+        }
 
-		return view;
-	}
+        lv.setAdapter(this);
 
-	@Override
-	public void registerDataSetObserver(DataSetObserver observer)
-	{
-		// TODO Auto-generated method stub
+        return view;
+    }
 
-	}
+    @Override
+    public void registerDataSetObserver(DataSetObserver observer)
+    {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void unregisterDataSetObserver(DataSetObserver observer)
-	{
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer)
+    {
+        // TODO Auto-generated method stub
 
-	@Override
-	public int getCount()
-	{
-		return igre.size();
-	}
+    }
 
-	@Override
-	public Object getItem(int position)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public int getCount()
+    {
+        return igre.size();
+    }
 
-	@Override
-	public long getItemId(int position)
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public Object getItem(int position)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public boolean hasStableIds()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public long getItemId(int position)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		if (convertView == null)
-		{
-			LayoutInflater vi = (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = vi.inflate(R.layout.list_row, null);
-			TextView tv1 = (TextView) convertView.findViewById(R.id.pozicija);
-			TextView tv2 = (TextView) convertView.findViewById(R.id.name);
-			TextView tv3 = (TextView) convertView.findViewById(R.id.score);
-			TextView tv4 = (TextView) convertView.findViewById(R.id.datum);
+    @Override
+    public boolean hasStableIds()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-			tv1.setText(objectList.get(position).getPosition());
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        if (convertView == null)
+        {
+            LayoutInflater vi = (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = vi.inflate(R.layout.list_row, null);
+            TextView tv1 = (TextView) convertView.findViewById(R.id.pozicija);
+            TextView tv2 = (TextView) convertView.findViewById(R.id.name);
+            TextView tv3 = (TextView) convertView.findViewById(R.id.score);
+            TextView tv4 = (TextView) convertView.findViewById(R.id.datum);
 
-			tv2.setText(objectList.get(position).getName());
+            tv1.setText(objectList.get(position).getPosition());
 
-			tv3.setText(objectList.get(position).getScore());
+            tv2.setText(objectList.get(position).getName());
 
-			tv4.setText(objectList.get(position).getDate());
-		}
-		return convertView;
-	}
+            tv3.setText("" + objectList.get(position).getScore());
 
-	@Override
-	public int getItemViewType(int position)
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+            tv4.setText(objectList.get(position).getDate());
+        }
+        return convertView;
+    }
 
-	@Override
-	public int getViewTypeCount()
-	{
-		return 1;
-	}
+    @Override
+    public int getItemViewType(int position)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	@Override
-	public boolean isEmpty()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public int getViewTypeCount()
+    {
+        return 1;
+    }
 
-	@Override
-	public boolean areAllItemsEnabled()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isEmpty()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public boolean isEnabled(int position)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean areAllItemsEnabled()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
