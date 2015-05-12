@@ -3,6 +3,7 @@ package com.etf.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
+//Klasa predstavlja jednu partiju (Uèesnike, pobednika ... ) 
 public class Igra
 {
 

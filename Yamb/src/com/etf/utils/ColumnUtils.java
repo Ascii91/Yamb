@@ -8,8 +8,12 @@ import com.etf.view.Field;
 
 public class ColumnUtils
 {
-    private static int highlightColor1 = 0x5f0000ff;
+    private static int highlightColor1 = 0x5f0000ff; // Boja kojom se sence polja u koja mozemo upisati vrednost
 
+    /**
+     * Bojenje kolone najava
+     * @param fields
+     */
     public static void columnBell(List<Field> fields)
     {
 
@@ -18,8 +22,7 @@ public class ColumnUtils
             for (Field f : fields)
             {
                 FieldData data = f.getFieldData();
-                if (data.getFieldX() / data.getFieldWidth() == 6)// &&
-                                                                 // data.isNajava())
+                if (data.getFieldX() / data.getFieldWidth() == 6)
 
                 {
                     if (f.getType() != 2)
@@ -148,6 +151,10 @@ public class ColumnUtils
         }
     }
 
+    /**
+     * Bojenje kolone Hand
+     * @param fields
+     */
     public static void columnHand(List<Field> fields)
     {
         for (Field f : fields)
@@ -216,15 +223,17 @@ public class ColumnUtils
 
     }
 
+    /**
+     * Bojenje kolone gore dole od sredine
+     * @param fields
+     */
     public static void columnMiddleUpDown(List<Field> fields)
     {
 
         for (Field f : fields)
         {
-            // f.getFieldData().setSugestion(0);
             FieldData data = f.getFieldData();
-            if (data.getFieldX() / data.getFieldWidth() == 4) // strelica
-                                                              // nadole
+            if (data.getFieldX() / data.getFieldWidth() == 4)
             {
                 if (data.getFieldValue() != -1 || f.getType() != 2 || data.getFieldY() / data.getFieldHeight() < 9)
                 {
@@ -267,10 +276,8 @@ public class ColumnUtils
         for (int i = fields.size() - 1; i >= 0; i--)
         {
             Field f = fields.get(i);
-            // f.getFieldData().setSugestion(0);
             FieldData data = f.getFieldData();
-            if (data.getFieldX() / data.getFieldWidth() == 4) // strelica
-                                                              // nadole
+            if (data.getFieldX() / data.getFieldWidth() == 4)
             {
                 if (data.getFieldValue() != -1 || f.getType() != 2 || data.getFieldY() / data.getFieldHeight() > 8)
                 {
@@ -312,6 +319,10 @@ public class ColumnUtils
 
     }
 
+    /**
+     * Bojenje kolone nagore
+     * @param fields
+     */
     public static void columnUp(List<Field> fields)
     {
         for (int i = fields.size() - 1; i >= 0; i--)
@@ -371,8 +382,6 @@ public class ColumnUtils
                             f.getFieldData().setSugestion(Calculator.calculateSugetstionNumber(1));
                             break;
 
-                    //
-
                     }
                     f.setHighlightColor(highlightColor1);
                     break;
@@ -383,8 +392,12 @@ public class ColumnUtils
         }
     }
 
+    /**
+     * Bojenje kolone gore dole (kolona u koju možemo upisivati po bilo kom redosledu)
+     * @param fields
+     */
     public static void columnUpDown(List<Field> fields)
-    {
+    { 
         for (Field f : fields)
         {
 
@@ -452,6 +465,10 @@ public class ColumnUtils
 
     }
 
+    /**
+     * Bojenje kolone nadole
+     * @param fields
+     */
     public static void columnDown(List<Field> fields)
     {
         for (Field f : fields)

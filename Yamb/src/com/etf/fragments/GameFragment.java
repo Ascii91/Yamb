@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.etf.controller.Controler;
 import com.etf.yamb.R;
 
+//Frgment u kome se odvija igrica
 public class GameFragment extends Fragment
 {
 

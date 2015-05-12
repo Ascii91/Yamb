@@ -1,5 +1,7 @@
 package com.etf.simulation;
 
+
+// Klasa koja modeluje objekat bacanja ( Upisuje se u bazu podataka
 public class Bacanje
 {
     private int    brojPartije;

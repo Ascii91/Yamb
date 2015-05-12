@@ -17,13 +17,11 @@ public class Controler
     private static Controler controler;
 
     private Igra             igra;
-    private boolean          shakingInProgress;
     private Board            board;
     private State            stanje = State.POCETNO_STANJE;
     private GameFragment     gameFragment;
     private int              brojBacanja;
     private int[]            values = new int[6];
-
     private int              totalMoves;
     private String           playerName;
     private int              playerNumber;
@@ -56,11 +54,6 @@ public class Controler
         Controler.controler = controler;
     }
 
-    public void stopShaking()
-    {
-        setShakingInProgress(false);
-    }
-
     public static Controler getControler()
     {
         if (controler == null)
@@ -70,16 +63,9 @@ public class Controler
         return controler;
     }
 
-    public boolean isShakingInProgress()
-    {
-        return shakingInProgress;
-    }
-
-    public void setShakingInProgress(boolean shakingInProgress)
-    {
-        this.shakingInProgress = shakingInProgress;
-    }
-
+    /**
+     * Inicijalizuje i startuje igru
+     */
     public void initAndStartGame()
     {
         SharedPreferences prefs = getControler().getBoard().getContext().getSharedPreferences(Constants.IGRA, 0);
@@ -169,6 +155,7 @@ public class Controler
 
         }
 
+        // i ucitavamo novi
         switch (playerNumber)
         {
             case 1 :

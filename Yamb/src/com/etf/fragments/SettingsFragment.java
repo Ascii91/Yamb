@@ -20,6 +20,7 @@ import com.etf.controller.Controler;
 import com.etf.utils.Constants;
 import com.etf.yamb.R;
 
+//Fragment za podešavanje igrice
 public class SettingsFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener
 {
 
@@ -56,6 +57,7 @@ public class SettingsFragment extends Fragment implements OnClickListener, OnSee
         int progress = prefs.getInt(Constants.OSETLJIVOST, -1);
         boolean sound = prefs.getBoolean(Constants.ZVUK, true);
 
+        // prvi put, nema inicijalnih podešavanja
         if (progress == -1)
         {
             progress = 50;
@@ -111,14 +113,23 @@ public class SettingsFragment extends Fragment implements OnClickListener, OnSee
 
     }
 
+    /**
+     * Èuvanje svih podataka 
+     */
     private void save()
-    {
+    {   
         saveProgressToPrefs(Constants.SETTINGS, Constants.OSETLJIVOST, seekBar.getProgress());
         saveSoundToPrefs(Constants.SETTINGS, Constants.ZVUK, cb.isChecked());
         Controler.getControler().resetControler();
         Toast.makeText(this.getActivity(), R.string.changes_saved, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Èuvanje podešavanja zvuka u preferencama
+     * @param prefsName
+     * @param prefsValue
+     * @param value
+     */
     private void saveSoundToPrefs(String prefsName, String prefsValue, boolean value)
     {
         SharedPreferences settings = getActivity().getSharedPreferences(prefsName, 0);
@@ -128,8 +139,14 @@ public class SettingsFragment extends Fragment implements OnClickListener, OnSee
 
     }
 
+    /**
+     * Èuvanje osetljivosti kockica u preference
+     * @param prefsName
+     * @param prefsValue
+     * @param value
+     */
     private void saveProgressToPrefs(String prefsName, String prefsValue, int value)
-    {
+    {   
         SharedPreferences settings = getActivity().getSharedPreferences(prefsName, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(prefsValue, value);

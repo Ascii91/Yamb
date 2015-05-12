@@ -7,12 +7,10 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +21,12 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.etf.db.YambDb;
 import com.etf.simulation.Igra;
 import com.etf.utils.ListObject;
 import com.etf.yamb.R;
 
+// Fragment zadužen za statistiku prethodnih igara
 public class StatisticsFragment extends Fragment implements ListAdapter, OnItemClickListener
 {
     private View     view;
@@ -89,6 +87,7 @@ public class StatisticsFragment extends Fragment implements ListAdapter, OnItemC
         return view;
     }
 
+    // Automatski generisane metode
     @Override
     public void registerDataSetObserver(DataSetObserver observer)
     {
@@ -186,8 +185,6 @@ public class StatisticsFragment extends Fragment implements ListAdapter, OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        Log.e("ITEMO ", "SELCTO");
-        final FragmentManager fm = this.getActivity().getFragmentManager();
         new AlertDialog.Builder(this.getActivity()).setTitle(R.string.quit_title).setMessage(R.string.simulation_message).setPositiveButton(
                 android.R.string.yes, new DialogInterface.OnClickListener()
                 {
@@ -201,7 +198,7 @@ public class StatisticsFragment extends Fragment implements ListAdapter, OnItemC
         {
             public void onClick(DialogInterface dialog, int which)
             {
-                // do nothing
+
             }
         }).setIcon(android.R.drawable.ic_dialog_info).show();
 

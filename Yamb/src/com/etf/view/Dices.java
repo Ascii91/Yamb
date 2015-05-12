@@ -66,21 +66,23 @@ public class Dices extends ImageView
     public Dices(Board board)
     {
         super(board.getContext());
-
         this.board = board;
         initBitmaps(board.getContext());
         diceRoller = new DiceRoller(this);
-        SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.SETTINGS, 0);
 
     }
 
     public boolean stopShaking = true;
 
+    /**
+     * Zapocinje prikazivanje animacije svih kockica koje su selektovane 
+     */
     public void startShaking()
-    {
+    {   
         setMp(MediaPlayer.create(getContext(), R.raw.roll_dice));
-
         SharedPreferences prefs = ((Activity) (this.getContext())).getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
+        
+        //Citamo da li je zvuk ukljucen
         shouldPlay = prefs.getBoolean(Constants.ZVUK, true);
 
         stopShaking = false;
@@ -98,12 +100,13 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Zaustavljanje muckanja, upis vrednosti u kontroler  
+     */
     public void stopShaking()
     {
         SharedPreferences prefs = ((Activity) (this.getContext())).getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
-
         shouldPlay = prefs.getBoolean(Constants.ZVUK, true);
-
         stopShaking = true;
         Vibrator v = (Vibrator) board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(100);
@@ -114,6 +117,7 @@ public class Dices extends ImageView
         mp.stop();
         setMp(MediaPlayer.create(getContext(), R.raw.throw_dice));
 
+        //Play zvuka ukoliko je potrebno
         if (shouldPlay)
         {
             mp.start();
@@ -122,9 +126,14 @@ public class Dices extends ImageView
 
     }
 
-    // animate specific dice
+    
+    
+    /**
+     * Prikazuje animaciju muckanja odredjene kockice
+     * @param dice broj kockice (0 do 5)
+     */
     public void animateDice(final int dice)
-    {
+    {   
         final Handler handler = new Handler();
         if (!stopShaking)
         {
@@ -140,6 +149,8 @@ public class Dices extends ImageView
                         animateDice(dice);
                     }
                     board.invalidate();
+                    
+                    //Ukoliko je potrebno pusta zvuk
                     if (!getMp().isPlaying() && shouldPlay)
                     {
                         getMp().start();
@@ -153,6 +164,8 @@ public class Dices extends ImageView
         }
 
     }
+    
+    
 
     @Override
     protected void onDraw(Canvas canvas)
@@ -162,6 +175,10 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Inicijalizuje veli;inu polja za upis rezultata i slicice za kockice
+     * @param context
+     */
     private void initBitmaps(Context context)
     {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -191,6 +208,11 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * vraca sliku selektovane kockice (plava slika)
+     * @param i
+     * @return
+     */
     private Bitmap getSelectedBitmapByNumber(int i)
     {
         switch (i)
@@ -218,6 +240,11 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Vraca sliku neselektovane kockice 
+     * @param i
+     * @return
+     */
     private Bitmap getBitmapByNumber(int i)
     {
         switch (i)
@@ -246,12 +273,15 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Iscrtavanje kockica na ekranu u zavisnosti da li su selektovane ili ne
+     * @param canvas
+     */
     private void drawDices(Canvas canvas)
     {
-
         try
         {
-            if (!getSelected()[0])
+            if (!getSelected()[0]) 
             {
                 canvas.drawBitmap(getBitmapByNumber(values[0]), startX + margin, startY, null);
             }
@@ -310,6 +340,13 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Menja velièinu slike kako bi bila normalne velièine na ekranu
+     * @param bitmap
+     * @param reqWidth
+     * @param reqHeight
+     * @return resized Bitmap
+     */
     private Bitmap resizeBitmap(Bitmap b, int reqWidth, int reqHeight)
     {
         Matrix m = new Matrix();
@@ -318,6 +355,9 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     *Ukljuèuje muækanje 
+     */
     public void enableShaking()
     {
         SharedPreferences prefs = ((Activity) (this.getContext())).getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
@@ -325,6 +365,9 @@ public class Dices extends ImageView
         diceRoller.setSensitivity(prefs.getInt(Constants.OSETLJIVOST, 50));
     }
 
+    /**
+     *Iskljuèuje muækanje 
+     */
     public void disableShaking()
     {
         diceRoller.deregister();
@@ -350,6 +393,10 @@ public class Dices extends ImageView
         this.startY = startY;
     }
 
+    /**
+     * Ukoliko kliknemo na kockicu ona æe promeniti boju ako je to dozvoljeno
+     * @param v
+     */
     public void onTouch(MotionEvent v)
     {
 
@@ -367,6 +414,8 @@ public class Dices extends ImageView
         {
             int measure = startX + margin + i * bitmapWidth;
             Rect diceRect = new Rect(measure, startY, measure + bitmapWidth, startY + bitmapHeight);
+           
+            //Odreðujemo koju kockicu smo kliknuli
             if (diceRect.contains(clickedX, clickedY))
             {
                 if (getSelected()[i])
@@ -387,8 +436,11 @@ public class Dices extends ImageView
 
     }
 
+    /**
+     * Resetuje sve kockice 
+     */
     public void reset()
-    {
+    {   
         values = new int[6];
         setSelected(new boolean[6]);
     }

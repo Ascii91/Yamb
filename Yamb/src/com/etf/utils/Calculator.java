@@ -12,6 +12,9 @@ import com.etf.view.Field;
 public class Calculator
 {
 
+    /** raèunanje predloga za maximum
+     * @return
+     */
     public static int calculateMax()
     {
         int max = 0;
@@ -40,6 +43,10 @@ public class Calculator
 
     }
 
+    /**
+     * Raèunanje predloga za minimum
+     * @return
+     */
     public static int calculateMin()
     {
         int min = 0;
@@ -65,8 +72,13 @@ public class Calculator
         return min;
     }
 
+    /**
+     * Raèunanje predloga za brojeve
+     * @param num
+     * @return
+     */
     public static int calculateSugetstionNumber(int num)
-    {
+    {   
 
         int sugestion = 0;
         for (int i = 0; i < 6; i++)
@@ -84,8 +96,13 @@ public class Calculator
         return sugestion;
     }
 
+    /**
+     * Raèunanje predloga za triling
+     * @return
+     */
     public static int calculateTriling()
     {
+        
         int triling = 0;
         int[] tempNiz = Controler.getControler().getValues();
         int num = 0;
@@ -111,6 +128,10 @@ public class Calculator
         return triling;
     }
 
+    /**
+     * Racunanje predloga za Straight
+     * @return
+     */
     public static int calculateStraight()
     {
 
@@ -158,6 +179,10 @@ public class Calculator
         return 0;
     }
 
+    /**
+     * Racunanje predloga za full
+     * @return
+     */
     public static int calculateFull()
     {
 
@@ -206,6 +231,10 @@ public class Calculator
         return 0;
     }
 
+    /**
+     * Racunanje predloga za poker
+     * @return
+     */
     public static int calculatePoker()
     {
         int[] tempNiz = Controler.getControler().getValues().clone();
@@ -226,6 +255,10 @@ public class Calculator
         return 0;
     }
 
+    /**
+     * Racunanje predloga za jamb
+     * @return
+     */
     public static int calculateYamb()
     {
         int[] tempNiz = Controler.getControler().getValues().clone();
@@ -252,7 +285,7 @@ public class Calculator
      * @param fields Izracunavamo sumu svih kolona
      */
     public static void calculateSum(List<Field> fields)
-    {
+    { 
         int suma1Down = 0;
         int suma2Down = 0;
         int suma3Down = 0;

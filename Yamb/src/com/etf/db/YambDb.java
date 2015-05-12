@@ -15,6 +15,7 @@ import com.etf.controller.Controler;
 import com.etf.simulation.Bacanje;
 import com.etf.simulation.Igra;
 
+// Klasa za rad sa bazom podataka
 public class YambDb
 {
     private static String       DATABASE_NAME                 = "yamb";
@@ -53,6 +54,10 @@ public class YambDb
         return this;
     }
 
+    /**
+     * Dohvatanje svih igara saèuvanih u bazi
+     * @return
+     */
     public List<Igra> getIgre()
     {
         List<Igra> igre = new ArrayList<Igra>();
@@ -129,6 +134,9 @@ public class YambDb
         return igre;
     }
 
+    /**
+     * Insertovanje igre u bazu
+     */
     public void insertIgra()
     {
         open();
@@ -169,6 +177,19 @@ public class YambDb
 
     }
 
+    /**
+     *Brisanje svih podataka iz baze podataka 
+     */
+    public void deleteAll()
+    {
+        open();
+        myDatabase.execSQL("DELETE FROM " + IGRA_TABLE);
+        myDatabase.execSQL("DELETE FROM " + BACANJE_TABLE);
+        close();
+        Toast.makeText(context, "Istorija rezultata uspesno obrisana", Toast.LENGTH_SHORT).show();
+    }
+    
+    
     /**
      * Closes the connection with the database.
      */
@@ -212,14 +233,7 @@ public class YambDb
         this.myDatabase = myDatabase;
     }
 
-    public void deleteAll()
-    {
-        open();
-        myDatabase.execSQL("DELETE FROM " + IGRA_TABLE);
-        myDatabase.execSQL("DELETE FROM " + BACANJE_TABLE);
-        close();
-        Toast.makeText(context, "Istorija rezultata uspesno obrisana", Toast.LENGTH_SHORT).show();
-    }
+
 
     /**
      * Private class which is used for creation and update of the database.

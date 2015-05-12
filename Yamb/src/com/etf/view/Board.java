@@ -46,7 +46,6 @@ public class Board extends ImageView implements OnTouchListener
     private int         player2Score = 0;
     private int         player3Score = 0;
     private int         player4Score = 0;
-
     private Dices       dices;
     private Paint       txtPaint     = new Paint();
 
@@ -68,6 +67,9 @@ public class Board extends ImageView implements OnTouchListener
         initBoard();
     }
 
+    /**
+     * Inicijalizovanje table za igru
+     */
     public void initBoard()
     {
 
@@ -107,6 +109,7 @@ public class Board extends ImageView implements OnTouchListener
         Dices dic = new Dices(this);
         Controler.getControler().setDices(dic);
         setDices(dic);
+
         SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
         Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC1, ""));
         Controler.getControler().setPlayerNumber(1);
@@ -115,11 +118,17 @@ public class Board extends ImageView implements OnTouchListener
         this.setOnTouchListener(this);
     }
 
+    /**
+     * Ukljucivanje funkcionalnosti muckanja
+     */
     public void enableShaking()
     {
         getDices().enableShaking();
     }
 
+    /**
+     * Iskljucivanje funkcionalnosti muækanja
+     */
     public void disableShaking()
     {
         getDices().disableShaking();
@@ -148,10 +157,12 @@ public class Board extends ImageView implements OnTouchListener
 
     }
 
+    /**
+     * Prikazuje pobedniku dijalog i sa;uvava partiju u lokalnu bazu podataka
+     */
     public void showWinnerDialog()
     {
 
-        // dodati u objekat igre ime i score pobednika
         int score1 = Controler.getControler().getBoard().getPlayer1Score();
         int score2 = Controler.getControler().getBoard().getPlayer2Score();
         int score3 = Controler.getControler().getBoard().getPlayer3Score();
@@ -224,6 +235,9 @@ public class Board extends ImageView implements OnTouchListener
         });
     }
 
+    /**
+     * Prikazuje dijalog i priprema tablu za narednog igra;a U slu;aju da je kraj igre prikazuje cestitku korisniku
+     */
     public void showDialog()
     {
         int num = Controler.getControler().getTotalMoves();
@@ -232,7 +246,7 @@ public class Board extends ImageView implements OnTouchListener
 
         if (num / Controler.getControler().getNumOfPlayers() == 78)
         {
-            // KRAJ IGRE, cestitka pobedniku i upisuje rezultate u bazu
+
             showWinnerDialog();
             return;
         }
@@ -271,6 +285,11 @@ public class Board extends ImageView implements OnTouchListener
         });
     }
 
+    /**
+     * Kreira dijalog sa tekstom poruke
+     * @param message
+     * @return
+     */
     private Dialog createDialog(String message)
     {
         Controler.getControler().getBoard().disableShaking();
@@ -316,6 +335,10 @@ public class Board extends ImageView implements OnTouchListener
         return false;
     }
 
+    /**
+     * U zavisnosti od parametra radi senèenje svih polja potrebnih
+     * @param i redni broj poteza
+     */
     public void colorFields(int i)
     {
         resetSugestions();
@@ -360,6 +383,9 @@ public class Board extends ImageView implements OnTouchListener
         }
     }
 
+    /**
+     * Resetuje predloge za popunjavanje polja
+     */
     public void resetSugestions()
     {
         for (Field f : fields)
@@ -369,6 +395,9 @@ public class Board extends ImageView implements OnTouchListener
         }
     }
 
+    /**
+     * Resetuje trenutnu najavu
+     */
     public void resetNajava()
     {
         for (Field f : fields)
@@ -474,9 +503,15 @@ public class Board extends ImageView implements OnTouchListener
         this.player4Score = player4Score;
     }
 
+    /**
+     * Moja metoda za testiranje, potrebno obrisati kasnije
+     * @throws IOException
+     */
     private void writeToSD() throws IOException
     {
+
         File sd = Environment.getExternalStorageDirectory();
+
         String DB_PATH;
         DB_PATH = getContext().getFilesDir().getAbsolutePath().replace("files", "databases") + File.separator;
         String DB_NAME = "yamb";

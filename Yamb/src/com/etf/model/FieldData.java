@@ -7,6 +7,7 @@ import android.view.WindowManager;
 
 import com.etf.utils.Constants;
 
+// Podaci o svakom polju na tabli
 public class FieldData
 {
 

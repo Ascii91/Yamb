@@ -56,9 +56,8 @@ public class ShakeEventManager implements SensorEventListener
         {
 
             counter2 = 0;
-            //
             if (counter <= 0)// ako muckanje nije u toku zapocni novo merenje
-                             // muckanja
+                           // muckanja
             {
                 counter++;
 
@@ -79,14 +78,14 @@ public class ShakeEventManager implements SensorEventListener
                     if (!shakeInProgres)
                     {
                         shakeInProgres = true;
-                        listener.onShake();
+                        listener.onShake(); // obavestavamo da je pocelo muækanje
                     }
                     return;
                 }
 
             }
         }
-        else
+        else  //Smirivanje kockica
         {
             if (shakeInProgres)
             {

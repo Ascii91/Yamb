@@ -1,5 +1,7 @@
 package com.etf.utils;
 
+
+// Konstante koje se koriste u aplikaciji
 public class Constants
 {
     public static final String IGRA              = "igra";

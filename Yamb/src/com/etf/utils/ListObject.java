@@ -1,5 +1,6 @@
 package com.etf.utils;
 
+// Objekat u listi (Statistika) 
 public class ListObject implements Comparable<ListObject>
 {
     private String position;

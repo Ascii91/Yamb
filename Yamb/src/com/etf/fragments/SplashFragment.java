@@ -34,6 +34,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
     private CheckBox cb4;
     private int      brojIgraca = 1;
 
+    // Polja za unošenje imena
     private EditText player1name;
     private EditText player2name;
     private EditText player3name;
@@ -112,6 +113,7 @@ public class SplashFragment extends Fragment implements OnClickListener, android
                 dialog.dismiss();
             }
         });
+
         cancelButton.setOnClickListener(new OnClickListener()
         {
 

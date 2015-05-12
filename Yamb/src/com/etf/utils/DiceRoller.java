@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.etf.view.Dices;
 
+
+//Klasa za vræenje kockica
 public class DiceRoller implements ShakeEventManager.ShakeListener
 {
 
