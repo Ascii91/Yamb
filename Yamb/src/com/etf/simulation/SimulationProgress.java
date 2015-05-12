@@ -9,7 +9,7 @@ public class SimulationProgress extends AsyncTask<Void, Void, Void>
     protected Void doInBackground(Void... params)
     {
      //TODO: ovde ce se pozivati sve ove ostale gluposti   
-        
+   
         
         
         
@@ -21,6 +21,16 @@ public class SimulationProgress extends AsyncTask<Void, Void, Void>
         
         
         return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Void result)
+    {
+        super.onPostExecute(result);
+    
+    //TODO: Ovde ce se ispisati poruka da je partija zavrsena 
+    
     }
 
 }
