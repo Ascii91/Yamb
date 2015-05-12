@@ -23,7 +23,8 @@ public class Controler
 	private GameFragment gameFragment;
 	private int brojBacanja;
 	private int[] values = new int[6];
-
+	
+	private int totalMoves;
 	private String playerName;
 	private int playerNumber;
 	private int numOfPlayers;
@@ -248,4 +249,14 @@ public class Controler
 	    
 	    getBoard().getDices().setSensitivity(sens);
 	}
+
+    public int getTotalMoves()
+    {
+        return totalMoves;
+    }
+
+    public void setTotalMoves(int totalMoves)
+    {
+        this.totalMoves = totalMoves;
+    }
 }

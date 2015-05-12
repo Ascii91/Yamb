@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.etf.controller.Controler;
 import com.etf.simulation.Bacanje;
@@ -209,6 +210,14 @@ public class YambDb
     public void setMyDatabase(SQLiteDatabase myDatabase)
     {
         this.myDatabase = myDatabase;
+    }
+
+    public void deleteAll()
+    {   open();
+        myDatabase.execSQL("DELETE FROM " + IGRA_TABLE);
+        myDatabase.execSQL("DELETE FROM " + BACANJE_TABLE);
+        close();
+        Toast.makeText(context, "Istorija rezultata uspesno obrisana", Toast.LENGTH_SHORT).show();
     }
 
     /**

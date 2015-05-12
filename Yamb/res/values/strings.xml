@@ -26,5 +26,6 @@
     <string name="name">Ime</string>
     <string name="rezultat">Rezultat</string>
     <string name="datum">Datum</string>
+    <string name="delete_all">Obriši sve</string>
 
 </resources>

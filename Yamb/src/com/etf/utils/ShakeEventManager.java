@@ -173,6 +173,6 @@ public class ShakeEventManager implements SensorEventListener
 
     public void setSensitivity(int sens)
     {
-        ALPHA = 1.0f * (sens / 100);
+        ALPHA = 1.0f * (((float) sens) / 100);
     }
 }

@@ -11,7 +11,9 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ public class StatisticsFragment extends Fragment implements ListAdapter
 {
     private View     view;
     private ListView lv;
+    private Button   deleteAllButton;
+    private YambDb   yb;
     List<Igra>       igre;
     List<ListObject> objectList;
 
@@ -34,9 +38,8 @@ public class StatisticsFragment extends Fragment implements ListAdapter
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.statistics_fragment_layout, container, false);
         lv = (ListView) view.findViewById(R.id.list_view_statistics);
-
-        YambDb yb = new YambDb(getActivity());
-
+        deleteAllButton = (Button) view.findViewById(R.id.button_delete_all);
+        yb = new YambDb(getActivity());
         igre = yb.getIgre();
         objectList = new ArrayList<ListObject>();
 
@@ -60,25 +63,39 @@ public class StatisticsFragment extends Fragment implements ListAdapter
 
         for (int i = 0; i < objectList.size(); i++)
         {
-            objectList.get(i).setPosition("" + (i+1));
+            objectList.get(i).setPosition("" + (i + 1));
         }
 
+        
+        
         lv.setAdapter(this);
-
+             
+        deleteAllButton.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+           yb.deleteAll();     
+           objectList = new ArrayList<ListObject>();
+           
+            }
+        });
+        
+        
         return view;
     }
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer)
     {
-        // TODO Auto-generated method stub
+   
 
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer)
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -91,21 +108,21 @@ public class StatisticsFragment extends Fragment implements ListAdapter
     @Override
     public Object getItem(int position)
     {
-        // TODO Auto-generated method stub
+      
         return null;
     }
 
     @Override
     public long getItemId(int position)
     {
-        // TODO Auto-generated method stub
+       
         return 0;
     }
 
     @Override
     public boolean hasStableIds()
     {
-        // TODO Auto-generated method stub
+        
         return false;
     }
 
@@ -131,10 +148,10 @@ public class StatisticsFragment extends Fragment implements ListAdapter
         return convertView;
     }
 
+    
     @Override
     public int getItemViewType(int position)
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -147,21 +164,21 @@ public class StatisticsFragment extends Fragment implements ListAdapter
     @Override
     public boolean isEmpty()
     {
-        // TODO Auto-generated method stub
+    
         return false;
     }
 
     @Override
     public boolean areAllItemsEnabled()
     {
-        // TODO Auto-generated method stub
+    
         return false;
     }
 
     @Override
     public boolean isEnabled(int position)
     {
-        // TODO Auto-generated method stub
+        
         return false;
     }
 }

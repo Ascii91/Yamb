@@ -1,13 +1,13 @@
 package com.etf.view;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,15 +16,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
-import android.os.Build;
-import android.os.Environment;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.etf.controller.Controler;
 import com.etf.controller.GameProgress;
-import com.etf.db.YambDb;
+import com.etf.fragments.SettingsFragment;
 import com.etf.model.FieldData;
 import com.etf.simulation.Bacanje;
 import com.etf.utils.Constants;
@@ -379,7 +377,6 @@ public class Field extends ImageView
                 }
                 Toast.makeText(this.getContext(), R.string.uneto_polje, Toast.LENGTH_SHORT).show();
 
-                // TODO: UNOS X I Y
                 List<Bacanje> lista = Controler.getControler().getIgra().getLista();
 
                 lista.get(lista.size() - 1).setX(fieldData.getFieldX());
@@ -438,99 +435,28 @@ public class Field extends ImageView
             if (fieldData.getFieldY() == 0 && fieldData.getFieldX() / fieldData.getFieldWidth() == 7)
             {
 
-                // dodati u objekat igre ime i score pobednika
-                int score1 = Controler.getControler().getBoard().getPlayer1Score();
-                int score2 = Controler.getControler().getBoard().getPlayer2Score();
-                int score3 = Controler.getControler().getBoard().getPlayer3Score();
-                int score4 = Controler.getControler().getBoard().getPlayer4Score();
+                new AlertDialog.Builder((Activity) (this.getContext())).setTitle(R.string.quit_title).setMessage(R.string.warning_message).setPositiveButton(
+                        android.R.string.yes, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                FragmentManager fm = ((Activity) (Controler.getControler().getBoard().getContext())).getFragmentManager();
+                                Fragment fragment = new SettingsFragment();
+                                fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(
+                                        R.id.container, fragment).commit();
 
-                SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
-
-                int maxScore = Math.max(Math.max(score1, score2), Math.max(score3, score4));
-                String maxName = "";
-                if (maxScore == score1)
+                            }
+                        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
                 {
-                    maxName = prefs.getString(Constants.IGRAC1, "");
-                }
-                else if (maxScore == score2)
-                {
-                    maxName = prefs.getString(Constants.IGRAC2, "");
-                }
-                else if (maxScore == score3)
-                {
-                    maxName = prefs.getString(Constants.IGRAC3, "");
-                }
-                else if (maxScore == score4)
-                {
-                    maxName = prefs.getString(Constants.IGRAC4, "");
-                }
-                Controler.getControler().getIgra().setWinnerName(maxName);
-                Controler.getControler().getIgra().setWinnerScore(maxScore);
-
-                YambDb ydm = new YambDb(getContext());
-                ydm.insertIgra();
-                try
-                {
-                    writeToSD();
-                }
-                catch (IOException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                // final FragmentManager fm = ((Activity)
-                // (this.getContext())).getFragmentManager();
-                // new AlertDialog.Builder((Activity)
-                // (this.getContext())).setTitle(R.string.quit_title).setMessage(R.string.warning_message).setPositiveButton(
-                // android.R.string.yes, new DialogInterface.OnClickListener()
-                // {
-                // public void onClick(DialogInterface dialog, int which)
-                // {
-                // FragmentManager fm = ((Activity)
-                // (Controler.getControler().getBoard().getContext())).getFragmentManager();
-                // Fragment fragment = new SettingsFragment();
-                // fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come,
-                // R.anim.gla_there_gone).addToBackStack(null).replace(
-                // R.id.container, fragment).commit();
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // do nothing
+                    }
+                }).setIcon(android.R.drawable.ic_dialog_alert).show();
                 //
-                // }
-                // }).setNegativeButton(android.R.string.no, new
-                // DialogInterface.OnClickListener()
-                // {
-                // public void onClick(DialogInterface dialog, int which)
-                // {
-                // // do nothing
-                // }
-                // }).setIcon(android.R.drawable.ic_dialog_alert).show();
-                // //
 
             }
 
-        }
-    }
-
-    private void writeToSD() throws IOException
-    {
-        File sd = Environment.getExternalStorageDirectory();
-        String DB_PATH;
-        DB_PATH = getContext().getFilesDir().getAbsolutePath().replace("files", "databases") + File.separator;
-        String DB_NAME = "yamb";
-
-        if (sd.canWrite())
-        {
-            String currentDBPath = DB_NAME;
-            String backupDBPath = "backupname.db";
-            File currentDB = new File(DB_PATH, currentDBPath);
-            File backupDB = new File(sd, backupDBPath);
-
-            if (currentDB.exists())
-            {
-                FileChannel src = new FileInputStream(currentDB).getChannel();
-                FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                dst.transferFrom(src, 0, src.size());
-                src.close();
-                dst.close();
-            }
         }
     }
 

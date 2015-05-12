@@ -1,10 +1,16 @@
 package com.etf.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -12,7 +18,9 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -20,6 +28,7 @@ import android.widget.ImageView;
 
 import com.etf.controller.Controler;
 import com.etf.controller.GameProgress;
+import com.etf.db.YambDb;
 import com.etf.model.FieldData;
 import com.etf.utils.Calculator;
 import com.etf.utils.ColumnUtils;
@@ -28,351 +37,466 @@ import com.etf.utils.Constants;
 public class Board extends ImageView implements OnTouchListener
 {
 
-	private List<Field> fields;
-	private List<Field> fieldsPlayer1;
-	private List<Field> fieldsPlayer2;
-	private List<Field> fieldsPlayer3;
-	private List<Field> fieldsPlayer4;
-	private int player1Score = 0;
-	private int player2Score = 0;
-	private int player3Score = 0;
-	private int player4Score = 0;
+    private List<Field> fields;
+    private List<Field> fieldsPlayer1;
+    private List<Field> fieldsPlayer2;
+    private List<Field> fieldsPlayer3;
+    private List<Field> fieldsPlayer4;
+    private int         player1Score = 0;
+    private int         player2Score = 0;
+    private int         player3Score = 0;
+    private int         player4Score = 0;
 
-	private Dices dices;
-	private Paint txtPaint = new Paint();
+    private Dices       dices;
+    private Paint       txtPaint     = new Paint();
 
-	public Board(Context context)
-	{
-		super(context);
-		initBoard();
-	}
+    public Board(Context context)
+    {
+        super(context);
+        initBoard();
+    }
 
-	public Board(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-		initBoard();
-	}
+    public Board(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        initBoard();
+    }
 
-	public Board(Context context, AttributeSet attrs, int defStyleAttr)
-	{
-		super(context, attrs, defStyleAttr);
-		initBoard();
-	}
+    public Board(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+        initBoard();
+    }
 
-	public void initBoard()
-	{
+    public void initBoard()
+    {
 
-		Controler.getControler().setBoard(this);
-		fields = new ArrayList<Field>();
-		fieldsPlayer1 = new ArrayList<Field>();
-		fieldsPlayer2 = new ArrayList<Field>();
-		fieldsPlayer3 = new ArrayList<Field>();
-		fieldsPlayer4 = new ArrayList<Field>();
+        Controler.getControler().setBoard(this);
+        fields = new ArrayList<Field>();
+        fieldsPlayer1 = new ArrayList<Field>();
+        fieldsPlayer2 = new ArrayList<Field>();
+        fieldsPlayer3 = new ArrayList<Field>();
+        fieldsPlayer4 = new ArrayList<Field>();
 
-		for (int i = 0; i < Constants.FIELDS_HORISONTAL; i++)
-		{
-			for (int j = 0; j < Constants.FIELDS_VERTICAL; j++)
-			{
+        for (int i = 0; i < Constants.FIELDS_HORISONTAL; i++)
+        {
+            for (int j = 0; j < Constants.FIELDS_VERTICAL; j++)
+            {
 
-				int type = 2;
-				if (i == 0 || j == 0)
-				{
-					type = 0;
-				}// border
-				if (j > 16 || i == 7)
-				{
-					type = -1;
-				}// empty
-				if (j == 7 || j == 10 || j == 16)
-				{
-					type = 1;
-				}// sum
-				fields.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
-				fieldsPlayer1.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
-				fieldsPlayer2.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
-				fieldsPlayer3.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
-				fieldsPlayer4.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+                int type = 2;
+                if (i == 0 || j == 0)
+                {
+                    type = 0;
+                }// border
+                if (j > 16 || i == 7)
+                {
+                    type = -1;
+                }// empty
+                if (j == 7 || j == 10 || j == 16)
+                {
+                    type = 1;
+                }// sum
+                fields.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+                fieldsPlayer1.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+                fieldsPlayer2.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+                fieldsPlayer3.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+                fieldsPlayer4.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
 
-			}
-		}
-		Dices dic = new Dices(this);
-		Controler.getControler().setDices(dic);
-		setDices(dic);
-		SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
-		Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC1, ""));
-		Controler.getControler().setPlayerNumber(1);
-		Controler.getControler().setNumOfPlayers(Integer.parseInt(prefs.getString(Constants.BROJ_IGRACA, "")));
+            }
+        }
+        Dices dic = new Dices(this);
+        Controler.getControler().setDices(dic);
+        setDices(dic);
+        SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
+        Controler.getControler().setPlayerName(prefs.getString(Constants.IGRAC1, ""));
+        Controler.getControler().setPlayerNumber(1);
+        Controler.getControler().setNumOfPlayers(Integer.parseInt(prefs.getString(Constants.BROJ_IGRACA, "")));
 
-		this.setOnTouchListener(this);
-	}
+        this.setOnTouchListener(this);
+    }
 
-	public void enableShaking()
-	{
-		getDices().enableShaking();
-	}
+    public void enableShaking()
+    {
+        getDices().enableShaking();
+    }
 
-	public void disableShaking()
-	{
-		getDices().disableShaking();
-	}
+    public void disableShaking()
+    {
+        getDices().disableShaking();
+    }
 
-	@Override
-	protected void onDraw(Canvas canvas)
-	{
-		super.onDraw(canvas);
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        super.onDraw(canvas);
 
-		for (Field f : fields)
-		{
-			f.draw(canvas);
+        for (Field f : fields)
+        {
+            f.draw(canvas);
 
-		}
-		// iscrtavanje kockica
-		getDices().draw(canvas);
+        }
+        // iscrtavanje kockica
+        getDices().draw(canvas);
 
-		// Iscrtavanje teksta za score
-		txtPaint.setColor(Color.BLUE);
-		txtPaint.setTextSize(32);
-		String footerText = Controler.getControler().getPlayerName() + "      Total score:" + Controler.getControler().getScore() + "      Bacanje: "
-				+ Controler.getControler().getBrojBacanja();
+        // Iscrtavanje teksta za score
+        txtPaint.setColor(Color.BLUE);
+        txtPaint.setTextSize(32);
+        String footerText = Controler.getControler().getPlayerName() + "      Total score:" + Controler.getControler().getScore() + "      Bacanje: "
+                + Controler.getControler().getBrojBacanja();
 
-		canvas.drawText(footerText, getDices().getStartX() + getDices().getDiceWidth(), getDices().getStartY() - 5, txtPaint);
+        canvas.drawText(footerText, getDices().getStartX() + getDices().getDiceWidth(), getDices().getStartY() - 5, txtPaint);
 
-	}
+    }
 
-	public void showDialog()
-	{
+    public void showWinnerDialog()
+    {
 
-		Calculator.calculateSum(fields);
+        // dodati u objekat igre ime i score pobednika
+        int score1 = Controler.getControler().getBoard().getPlayer1Score();
+        int score2 = Controler.getControler().getBoard().getPlayer2Score();
+        int score3 = Controler.getControler().getBoard().getPlayer3Score();
+        int score4 = Controler.getControler().getBoard().getPlayer4Score();
 
-		Controler.getControler().getGameFragment().getActivity().runOnUiThread(new Runnable()
-		{
+        SharedPreferences prefs = this.getContext().getSharedPreferences(Constants.IGRA, 0);
 
-			@Override
-			public void run()
-			{
+        int maxScore = Math.max(Math.max(score1, score2), Math.max(score3, score4));
+        String maxName = "";
+        if (maxScore == score1)
+        {
+            maxName = prefs.getString(Constants.IGRAC1, "");
+        }
+        else if (maxScore == score2)
+        {
+            maxName = prefs.getString(Constants.IGRAC2, "");
+        }
+        else if (maxScore == score3)
+        {
+            maxName = prefs.getString(Constants.IGRAC3, "");
+        }
+        else if (maxScore == score4)
+        {
+            maxName = prefs.getString(Constants.IGRAC4, "");
+        }
+        Controler.getControler().getIgra().setWinnerName(maxName);
+        Controler.getControler().getIgra().setWinnerScore(maxScore);
 
-				switch (Controler.getControler().getPlayerNumber())
-				{
-				case 1:
+        YambDb ydm = new YambDb(getContext());
+        ydm.insertIgra();
+        try
+        {
+            writeToSD();
+        }
+        catch (IOException e)
+        {
+          
+            e.printStackTrace();
+        }
 
-					fields = fieldsPlayer1;
+        final String pobednik = maxName;
 
-					break;
-				case 2:
-					fields = fieldsPlayer2;
-					break;
-				case 3:
-					fields = fieldsPlayer3;
-					break;
-				case 4:
-					fields = fieldsPlayer4;
-					break;
+        Controler.getControler().getGameFragment().getActivity().runOnUiThread(new Runnable()
+        {
 
-				}
+            @Override
+            public void run()
+            {
 
-				createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
+                String message = "Cestitamo pobednik je " + pobednik;
 
-			}
-		});
-	}
+                Controler.getControler().getBoard().disableShaking();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-	private Dialog createDialog(String message)
-	{
-		Controler.getControler().getBoard().disableShaking();
-		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(message);
+                builder.setOnDismissListener(new OnDismissListener()
+                {
 
-		builder.setMessage(message);
-		builder.setOnDismissListener(new OnDismissListener()
-		{
+                    @Override
+                    public void onDismiss(DialogInterface dialog)
+                    {
 
-			@Override
-			public void onDismiss(DialogInterface dialog)
-			{
+                        FragmentManager fm = Controler.getControler().getGameFragment().getActivity().getFragmentManager();
+                        fm.popBackStack();
 
-				Controler.getControler().getBoard().enableShaking();
+                    }
+                });
 
-				invalidate();
-				new GameProgress().execute();
+            }
+        });
+    }
 
-			}
-		});
+    public void showDialog()
+    {
+        int num = Controler.getControler().getTotalMoves();
+        num++;
+        Controler.getControler().setTotalMoves(num);
 
-		return builder.create();
-	}
+        if (num / Controler.getControler().getNumOfPlayers() == 78)
+        {
+            // KRAJ IGRE, cestitka pobedniku i upisuje rezultate u bazu
+            showWinnerDialog();
+            return;
+        }
+        Log.e("MOVE", "" + num);
+        Calculator.calculateSum(fields);
 
-	@Override
-	public boolean onTouch(View v, MotionEvent event)
-	{
-		switch (event.getAction())
-		{
-		case MotionEvent.ACTION_DOWN:
-			getDices().onTouch(event);
-			for (Field f : fields)
-			{
-				f.onTouch(event);
-			}
+        Controler.getControler().getGameFragment().getActivity().runOnUiThread(new Runnable()
+        {
 
-			return true;
-		case MotionEvent.ACTION_UP:
-			return true;
-		case MotionEvent.ACTION_MOVE:
-			return true;
-		}
-		return false;
-	}
+            @Override
+            public void run()
+            {
 
-	public void colorFields(int i)
-	{
-		resetSugestions();
+                switch (Controler.getControler().getPlayerNumber())
+                {
+                    case 1 :
 
-		if (i == 1)
-		{
+                        fields = fieldsPlayer1;
 
-			ColumnUtils.columnDown(fields);
-			ColumnUtils.columnUpDown(fields);
-			ColumnUtils.columnUp(fields);
-			ColumnUtils.columnMiddleUpDown(fields);
-			ColumnUtils.columnHand(fields);
-			ColumnUtils.columnBell(fields);
-		} else if (i == 2)
-		{
-			if (Controler.getControler().isNajava() == false)
-			{
-				ColumnUtils.columnDown(fields);
-				ColumnUtils.columnUpDown(fields);
-				ColumnUtils.columnUp(fields);
-				ColumnUtils.columnMiddleUpDown(fields);
-			} else
-			{
-				ColumnUtils.columnBell(fields);
-			}
-		} else if (i == 3)
-		{
-			if (Controler.getControler().isNajava() == false)
-			{
-				ColumnUtils.columnDown(fields);
-				ColumnUtils.columnUpDown(fields);
-				ColumnUtils.columnUp(fields);
-				ColumnUtils.columnMiddleUpDown(fields);
-			} else
-			{
-				ColumnUtils.columnBell(fields);
-			}
-		}
-	}
+                        break;
+                    case 2 :
+                        fields = fieldsPlayer2;
+                        break;
+                    case 3 :
+                        fields = fieldsPlayer3;
+                        break;
+                    case 4 :
+                        fields = fieldsPlayer4;
+                        break;
 
-	public void resetSugestions()
-	{
-		for (Field f : fields)
-		{
-			f.setHighlightColor(0);
-			f.getFieldData().setSugestion(-1);
-		}
-	}
+                }
+                Calculator.calculateSum(fields);
+                createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
 
-	public void resetNajava()
-	{
-		for (Field f : fields)
-		{
-			f.setHighlightColor(0);
-			f.getFieldData().setNajava(false);
-		}
-	}
+            }
+        });
+    }
 
-	public Dices getDices()
-	{
-		return dices;
-	}
+    private Dialog createDialog(String message)
+    {
+        Controler.getControler().getBoard().disableShaking();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-	public void setDices(Dices dices)
-	{
-		this.dices = dices;
-	}
+        builder.setMessage(message);
+        builder.setOnDismissListener(new OnDismissListener()
+        {
 
-	public void resetDices()
-	{
-		dices.reset();
+            @Override
+            public void onDismiss(DialogInterface dialog)
+            {
 
-	}
+                Controler.getControler().getBoard().enableShaking();
 
-	public List<Field> getFieldsPlayer1()
-	{
-		return fieldsPlayer1;
-	}
+                invalidate();
+                new GameProgress().execute();
 
-	public void setFieldsPlayer1(List<Field> fieldsPlayer1)
-	{
-		this.fieldsPlayer1 = fieldsPlayer1;
-	}
+            }
+        });
 
-	public List<Field> getFieldsPlayer2()
-	{
-		return fieldsPlayer2;
-	}
+        return builder.create();
+    }
 
-	public void setFieldsPlayer2(List<Field> fieldsPlayer2)
-	{
-		this.fieldsPlayer2 = fieldsPlayer2;
-	}
+    @Override
+    public boolean onTouch(View v, MotionEvent event)
+    {
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN :
+                getDices().onTouch(event);
+                for (Field f : fields)
+                {
+                    f.onTouch(event);
+                }
 
-	public List<Field> getFieldsPlayer3()
-	{
-		return fieldsPlayer3;
-	}
+                return true;
+            case MotionEvent.ACTION_UP :
+                return true;
+            case MotionEvent.ACTION_MOVE :
+                return true;
+        }
+        return false;
+    }
 
-	public void setFieldsPlayer3(List<Field> fieldsPlayer3)
-	{
-		this.fieldsPlayer3 = fieldsPlayer3;
-	}
+    public void colorFields(int i)
+    {
+        resetSugestions();
 
-	public List<Field> getFieldsPlayer4()
-	{
-		return fieldsPlayer4;
-	}
+        if (i == 1)
+        {
 
-	public void setFieldsPlayer4(List<Field> fieldsPlayer4)
-	{
-		this.fieldsPlayer4 = fieldsPlayer4;
-	}
+            ColumnUtils.columnDown(fields);
+            ColumnUtils.columnUpDown(fields);
+            ColumnUtils.columnUp(fields);
+            ColumnUtils.columnMiddleUpDown(fields);
+            ColumnUtils.columnHand(fields);
+            ColumnUtils.columnBell(fields);
+        }
+        else if (i == 2)
+        {
+            if (Controler.getControler().isNajava() == false)
+            {
+                ColumnUtils.columnDown(fields);
+                ColumnUtils.columnUpDown(fields);
+                ColumnUtils.columnUp(fields);
+                ColumnUtils.columnMiddleUpDown(fields);
+            }
+            else
+            {
+                ColumnUtils.columnBell(fields);
+            }
+        }
+        else if (i == 3)
+        {
+            if (Controler.getControler().isNajava() == false)
+            {
+                ColumnUtils.columnDown(fields);
+                ColumnUtils.columnUpDown(fields);
+                ColumnUtils.columnUp(fields);
+                ColumnUtils.columnMiddleUpDown(fields);
+            }
+            else
+            {
+                ColumnUtils.columnBell(fields);
+            }
+        }
+    }
 
-	public int getPlayer1Score()
-	{
-		return player1Score;
-	}
+    public void resetSugestions()
+    {
+        for (Field f : fields)
+        {
+            f.setHighlightColor(0);
+            f.getFieldData().setSugestion(-1);
+        }
+    }
 
-	public void setPlayer1Score(int player1Score)
-	{
-		this.player1Score = player1Score;
-	}
+    public void resetNajava()
+    {
+        for (Field f : fields)
+        {
+            f.setHighlightColor(0);
+            f.getFieldData().setNajava(false);
+        }
+    }
 
-	public int getPlayer2Score()
-	{
-		return player2Score;
-	}
+    public Dices getDices()
+    {
+        return dices;
+    }
 
-	public void setPlayer2Score(int player2Score)
-	{
-		this.player2Score = player2Score;
-	}
+    public void setDices(Dices dices)
+    {
+        this.dices = dices;
+    }
 
-	public int getPlayer3Score()
-	{
-		return player3Score;
-	}
+    public void resetDices()
+    {
+        dices.reset();
 
-	public void setPlayer3Score(int player3Score)
-	{
-		this.player3Score = player3Score;
-	}
+    }
 
-	public int getPlayer4Score()
-	{
-		return player4Score;
-	}
+    public List<Field> getFieldsPlayer1()
+    {
+        return fieldsPlayer1;
+    }
 
-	public void setPlayer4Score(int player4Score)
-	{
-		this.player4Score = player4Score;
-	}
+    public void setFieldsPlayer1(List<Field> fieldsPlayer1)
+    {
+        this.fieldsPlayer1 = fieldsPlayer1;
+    }
+
+    public List<Field> getFieldsPlayer2()
+    {
+        return fieldsPlayer2;
+    }
+
+    public void setFieldsPlayer2(List<Field> fieldsPlayer2)
+    {
+        this.fieldsPlayer2 = fieldsPlayer2;
+    }
+
+    public List<Field> getFieldsPlayer3()
+    {
+        return fieldsPlayer3;
+    }
+
+    public void setFieldsPlayer3(List<Field> fieldsPlayer3)
+    {
+        this.fieldsPlayer3 = fieldsPlayer3;
+    }
+
+    public List<Field> getFieldsPlayer4()
+    {
+        return fieldsPlayer4;
+    }
+
+    public void setFieldsPlayer4(List<Field> fieldsPlayer4)
+    {
+        this.fieldsPlayer4 = fieldsPlayer4;
+    }
+
+    public int getPlayer1Score()
+    {
+        return player1Score;
+    }
+
+    public void setPlayer1Score(int player1Score)
+    {
+        this.player1Score = player1Score;
+    }
+
+    public int getPlayer2Score()
+    {
+        return player2Score;
+    }
+
+    public void setPlayer2Score(int player2Score)
+    {
+        this.player2Score = player2Score;
+    }
+
+    public int getPlayer3Score()
+    {
+        return player3Score;
+    }
+
+    public void setPlayer3Score(int player3Score)
+    {
+        this.player3Score = player3Score;
+    }
+
+    public int getPlayer4Score()
+    {
+        return player4Score;
+    }
+
+    public void setPlayer4Score(int player4Score)
+    {
+        this.player4Score = player4Score;
+    }
+
+    private void writeToSD() throws IOException
+    {
+        File sd = Environment.getExternalStorageDirectory();
+        String DB_PATH;
+        DB_PATH = getContext().getFilesDir().getAbsolutePath().replace("files", "databases") + File.separator;
+        String DB_NAME = "yamb";
+
+        if (sd.canWrite())
+        {
+            String currentDBPath = DB_NAME;
+            String backupDBPath = "backupname.db";
+            File currentDB = new File(DB_PATH, currentDBPath);
+            File backupDB = new File(sd, backupDBPath);
+
+            if (currentDB.exists())
+            {
+                FileChannel src = new FileInputStream(currentDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+            }
+        }
+    }
 
 }
