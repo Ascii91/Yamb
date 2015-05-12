@@ -686,11 +686,9 @@ public class Calculator
                         case 6 :
                             if (data.getFieldValue() >= 0)
                             {
-                                Log.e("BEFORE", "" + suma1Hand);
-                                Log.e("POS", "" + (data.getFieldY() / data.getFieldHeight()));
-                                Log.e("VAL", "" + data.getFieldValue());
+                               
                                 suma1Hand += data.getFieldValue();
-                                Log.e("After", "" + suma1Hand);
+                      
 
                             }
                             break;
