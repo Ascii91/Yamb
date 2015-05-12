@@ -113,7 +113,6 @@ public class SettingsFragment extends Fragment implements OnClickListener, OnSee
 
     private void save()
     {
-
         saveProgressToPrefs(Constants.SETTINGS, Constants.OSETLJIVOST, seekBar.getProgress());
         saveSoundToPrefs(Constants.SETTINGS, Constants.ZVUK, cb.isChecked());
         Controler.getControler().resetControler();

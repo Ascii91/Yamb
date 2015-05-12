@@ -45,4 +45,10 @@ public class DiceRoller implements ShakeEventManager.ShakeListener
 
 	}
 
+    public void setSensitivity(int sens)
+    {
+       sd.setSensitivity(sens);
+        
+    }
+
 }

@@ -243,4 +243,9 @@ public class Controler
 		this.igra = igra;
 	}
 
+	public void setSensitiviy(int sens)
+	{
+	    
+	    getBoard().getDices().setSensitivity(sens);
+	}
 }
