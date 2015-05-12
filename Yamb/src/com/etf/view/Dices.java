@@ -13,7 +13,6 @@ import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -137,9 +136,6 @@ public class Dices extends ImageView
 
                     if (!stopShaking)
                     {
-                        // Vibrator v = (Vibrator)
-                        // board.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-                        // v.vibrate(1);
                         values[dice] = (int) ((Math.random() * 6) + 1);
                         animateDice(dice);
                     }

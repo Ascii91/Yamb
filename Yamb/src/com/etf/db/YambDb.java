@@ -213,7 +213,8 @@ public class YambDb
     }
 
     public void deleteAll()
-    {   open();
+    {
+        open();
         myDatabase.execSQL("DELETE FROM " + IGRA_TABLE);
         myDatabase.execSQL("DELETE FROM " + BACANJE_TABLE);
         close();

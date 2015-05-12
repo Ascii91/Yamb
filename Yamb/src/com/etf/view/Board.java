@@ -188,7 +188,7 @@ public class Board extends ImageView implements OnTouchListener
         }
         catch (IOException e)
         {
-          
+
             e.printStackTrace();
         }
 

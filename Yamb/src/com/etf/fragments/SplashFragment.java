@@ -24,263 +24,266 @@ import com.etf.yamb.R;
 public class SplashFragment extends Fragment implements OnClickListener, android.widget.CompoundButton.OnCheckedChangeListener
 {
 
-	private View view;
-	private Button buttonIgraj;
-	private Button buttonPodesavanja;
-	private Button buttonStatistika;
-	private CheckBox cb1;
-	private CheckBox cb2;
-	private CheckBox cb3;
-	private CheckBox cb4;
-	private int brojIgraca = 1;
+    private View     view;
+    private Button   buttonIgraj;
+    private Button   buttonPodesavanja;
+    private Button   buttonStatistika;
+    private CheckBox cb1;
+    private CheckBox cb2;
+    private CheckBox cb3;
+    private CheckBox cb4;
+    private int      brojIgraca = 1;
 
-	private EditText player1name;
-	private EditText player2name;
-	private EditText player3name;
-	private EditText player4name;
+    private EditText player1name;
+    private EditText player2name;
+    private EditText player3name;
+    private EditText player4name;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		super.onCreateView(inflater, container, savedInstanceState);
-		view = inflater.inflate(R.layout.splash_fragment_layout, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.splash_fragment_layout, container, false);
 
-		buttonIgraj = (Button) view.findViewById(R.id.button_igraj);
-		buttonPodesavanja = (Button) view.findViewById(R.id.button_podesavanja);
-		buttonStatistika = (Button) view.findViewById(R.id.button_statistika);
-		brojIgraca = 1;
+        buttonIgraj = (Button) view.findViewById(R.id.button_igraj);
+        buttonPodesavanja = (Button) view.findViewById(R.id.button_podesavanja);
+        buttonStatistika = (Button) view.findViewById(R.id.button_statistika);
+        brojIgraca = 1;
 
-		buttonIgraj.setOnClickListener(this);
-		buttonPodesavanja.setOnClickListener(this);
-		buttonStatistika.setOnClickListener(this);
+        buttonIgraj.setOnClickListener(this);
+        buttonPodesavanja.setOnClickListener(this);
+        buttonStatistika.setOnClickListener(this);
 
-		return view;
-	}
+        return view;
+    }
 
-	private void openPlayerSelectDialog()
-	{
-		final Dialog dialog = new Dialog(this.getActivity());
+    private void openPlayerSelectDialog()
+    {
+        final Dialog dialog = new Dialog(this.getActivity());
 
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.player_number_select_layout);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.player_number_select_layout);
 
-		cb1 = (CheckBox) dialog.findViewById(R.id.check_box1);
-		cb2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
-		cb3 = (CheckBox) dialog.findViewById(R.id.checkBox3);
-		cb4 = (CheckBox) dialog.findViewById(R.id.checkBox4);
+        cb1 = (CheckBox) dialog.findViewById(R.id.check_box1);
+        cb2 = (CheckBox) dialog.findViewById(R.id.checkBox2);
+        cb3 = (CheckBox) dialog.findViewById(R.id.checkBox3);
+        cb4 = (CheckBox) dialog.findViewById(R.id.checkBox4);
 
-		cb1.setOnCheckedChangeListener(this);
-		cb2.setOnCheckedChangeListener(this);
-		cb3.setOnCheckedChangeListener(this);
-		cb4.setOnCheckedChangeListener(this);
+        cb1.setOnCheckedChangeListener(this);
+        cb2.setOnCheckedChangeListener(this);
+        cb3.setOnCheckedChangeListener(this);
+        cb4.setOnCheckedChangeListener(this);
 
-		player1name = (EditText) dialog.findViewById(R.id.editText1);
-		player2name = (EditText) dialog.findViewById(R.id.editText2);
-		player3name = (EditText) dialog.findViewById(R.id.editText3);
-		player4name = (EditText) dialog.findViewById(R.id.editText4);
+        player1name = (EditText) dialog.findViewById(R.id.editText1);
+        player2name = (EditText) dialog.findViewById(R.id.editText2);
+        player3name = (EditText) dialog.findViewById(R.id.editText3);
+        player4name = (EditText) dialog.findViewById(R.id.editText4);
 
-		brojIgraca = 0;
-		cb1.setChecked(true);
-		cb2.setChecked(false);
-		cb3.setChecked(false);
-		cb4.setChecked(false);
-		cb1.setTextColor(Color.BLACK);
-		cb2.setTextColor(Color.GRAY);
-		cb3.setTextColor(Color.GRAY);
-		cb4.setTextColor(Color.GRAY);
+        brojIgraca = 0;
+        cb1.setChecked(true);
+        cb2.setChecked(false);
+        cb3.setChecked(false);
+        cb4.setChecked(false);
+        cb1.setTextColor(Color.BLACK);
+        cb2.setTextColor(Color.GRAY);
+        cb3.setTextColor(Color.GRAY);
+        cb4.setTextColor(Color.GRAY);
 
-		player1name.setVisibility(View.VISIBLE);
-		player2name.setVisibility(View.INVISIBLE);
-		player3name.setVisibility(View.INVISIBLE);
-		player4name.setVisibility(View.INVISIBLE);
+        player1name.setVisibility(View.VISIBLE);
+        player2name.setVisibility(View.INVISIBLE);
+        player3name.setVisibility(View.INVISIBLE);
+        player4name.setVisibility(View.INVISIBLE);
 
-		Button okButton = (Button) dialog.findViewById(R.id.ok_button);
-		Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
-		okButton.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
+        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
+        Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+        okButton.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
 
-				if (brojIgraca <= 0)
-				{
-					Toast.makeText(dialog.getContext(), (R.string.minimum_players), Toast.LENGTH_SHORT).show();
-					return;
-				}
+                if (brojIgraca <= 0)
+                {
+                    Toast.makeText(dialog.getContext(), (R.string.minimum_players), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-				saveToPreferenceAndStartGame();
-				dialog.dismiss();
-			}
-		});
-		cancelButton.setOnClickListener(new OnClickListener()
-		{
+                saveToPreferenceAndStartGame();
+                dialog.dismiss();
+            }
+        });
+        cancelButton.setOnClickListener(new OnClickListener()
+        {
 
-			@Override
-			public void onClick(View v)
-			{
-				dialog.dismiss();
-			}
-		});
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
 
-		dialog.show();
-	}
+        dialog.show();
+    }
 
-	@Override
-	public void onClick(View v)
-	{
-		FragmentManager fm = getActivity().getFragmentManager();
-		Fragment fragment = null;
+    @Override
+    public void onClick(View v)
+    {
+        FragmentManager fm = getActivity().getFragmentManager();
+        Fragment fragment = null;
 
-		switch (v.getId())
-		{
-		case R.id.button_igraj:
-		    Controler.getControler().resetControler();
-			openPlayerSelectDialog();
-			break;
-		case R.id.button_podesavanja:
+        switch (v.getId())
+        {
+            case R.id.button_igraj :
+                Controler.getControler().resetControler();
+                openPlayerSelectDialog();
+                break;
+            case R.id.button_podesavanja :
 
-			fragment = new SettingsFragment();
-			fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
-			break;
-		case R.id.button_statistika:
+                fragment = new SettingsFragment();
+                fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
+                break;
+            case R.id.button_statistika :
 
-			fragment = new StatisticsFragment();
-			fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
-			break;
-		default:
-			break;
-		}
+                fragment = new StatisticsFragment();
+                fm.beginTransaction().setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone).addToBackStack(null).replace(R.id.container, fragment).commit();
+                break;
+            default :
+                break;
+        }
 
-	}
+    }
 
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-	{
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+    {
 
-		switch (buttonView.getId())
-		{
+        switch (buttonView.getId())
+        {
 
-		case R.id.check_box1:
+            case R.id.check_box1 :
 
-			if (cb1.isChecked())
-			{
-				brojIgraca++;
-				cb1.setChecked(true);
-				cb1.setTextColor(Color.BLACK);
-				player1name.setVisibility(View.VISIBLE);
-			} else
-			{
-				brojIgraca--;
-				cb1.setChecked(false);
-				cb1.setTextColor(Color.GRAY);
-				player1name.setVisibility(View.INVISIBLE);
-			}
+                if (cb1.isChecked())
+                {
+                    brojIgraca++;
+                    cb1.setChecked(true);
+                    cb1.setTextColor(Color.BLACK);
+                    player1name.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    brojIgraca--;
+                    cb1.setChecked(false);
+                    cb1.setTextColor(Color.GRAY);
+                    player1name.setVisibility(View.INVISIBLE);
+                }
 
-			break;
-		case R.id.checkBox2:
+                break;
+            case R.id.checkBox2 :
 
-			if (cb2.isChecked())
-			{
-				brojIgraca++;
-				cb2.setChecked(true);
-				cb2.setTextColor(Color.BLACK);
-				player2name.setVisibility(View.VISIBLE);
-			} else
-			{
-				brojIgraca--;
-				cb2.setChecked(false);
-				cb2.setTextColor(Color.GRAY);
-				player2name.setVisibility(View.INVISIBLE);
-			}
+                if (cb2.isChecked())
+                {
+                    brojIgraca++;
+                    cb2.setChecked(true);
+                    cb2.setTextColor(Color.BLACK);
+                    player2name.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    brojIgraca--;
+                    cb2.setChecked(false);
+                    cb2.setTextColor(Color.GRAY);
+                    player2name.setVisibility(View.INVISIBLE);
+                }
 
-			break;
-		case R.id.checkBox3:
+                break;
+            case R.id.checkBox3 :
 
-			if (cb3.isChecked())
-			{
-				brojIgraca++;
-				cb3.setChecked(true);
-				cb3.setTextColor(Color.BLACK);
-				player3name.setVisibility(View.VISIBLE);
-			} else
-			{
-				brojIgraca--;
-				cb3.setChecked(false);
-				cb3.setTextColor(Color.GRAY);
-				player3name.setVisibility(View.INVISIBLE);
-			}
+                if (cb3.isChecked())
+                {
+                    brojIgraca++;
+                    cb3.setChecked(true);
+                    cb3.setTextColor(Color.BLACK);
+                    player3name.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    brojIgraca--;
+                    cb3.setChecked(false);
+                    cb3.setTextColor(Color.GRAY);
+                    player3name.setVisibility(View.INVISIBLE);
+                }
 
-			break;
-		case R.id.checkBox4:
+                break;
+            case R.id.checkBox4 :
 
-			if (cb4.isChecked())
-			{
-				brojIgraca++;
-				cb4.setChecked(true);
-				player4name.setVisibility(View.VISIBLE);
-				cb4.setTextColor(Color.BLACK);
-			} else
-			{
-				brojIgraca--;
-				player4name.setVisibility(View.INVISIBLE);
-				cb4.setTextColor(Color.GRAY);
-				cb4.setChecked(false);
+                if (cb4.isChecked())
+                {
+                    brojIgraca++;
+                    cb4.setChecked(true);
+                    player4name.setVisibility(View.VISIBLE);
+                    cb4.setTextColor(Color.BLACK);
+                }
+                else
+                {
+                    brojIgraca--;
+                    player4name.setVisibility(View.INVISIBLE);
+                    cb4.setTextColor(Color.GRAY);
+                    cb4.setChecked(false);
 
-			}
+                }
 
-			break;
-		default:
+                break;
+            default :
 
-			break;
-		}
+                break;
+        }
 
-	}
+    }
 
-	private void saveToPreferenceAndStartGame()
-	{
-		String NO_PLAYER = "noPlayer";
-		String pl1Name = NO_PLAYER;
-		String pl2Name = NO_PLAYER;
-		String pl3Name = NO_PLAYER;
-		String pl4Name = NO_PLAYER;
+    private void saveToPreferenceAndStartGame()
+    {
+        String NO_PLAYER = "noPlayer";
+        String pl1Name = NO_PLAYER;
+        String pl2Name = NO_PLAYER;
+        String pl3Name = NO_PLAYER;
+        String pl4Name = NO_PLAYER;
 
-		if (cb1.isChecked())
-		{
-			pl1Name = player1name.getText().toString();
-		}
-		if (cb2.isChecked())
-		{
-			pl2Name = player2name.getText().toString();
-		}
-		if (cb3.isChecked())
-		{
-			pl3Name = player3name.getText().toString();
-		}
-		if (cb4.isChecked())
-		{
-			pl4Name = player4name.getText().toString();
-		}
+        if (cb1.isChecked())
+        {
+            pl1Name = player1name.getText().toString();
+        }
+        if (cb2.isChecked())
+        {
+            pl2Name = player2name.getText().toString();
+        }
+        if (cb3.isChecked())
+        {
+            pl3Name = player3name.getText().toString();
+        }
+        if (cb4.isChecked())
+        {
+            pl4Name = player4name.getText().toString();
+        }
 
-		saveToPrefs(Constants.IGRA, Constants.BROJ_IGRACA, "" + brojIgraca);
-		saveToPrefs(Constants.IGRA, Constants.IGRAC1, pl1Name);
-		saveToPrefs(Constants.IGRA, Constants.IGRAC2, pl2Name);
-		saveToPrefs(Constants.IGRA, Constants.IGRAC3, pl3Name);
-		saveToPrefs(Constants.IGRA, Constants.IGRAC4, pl4Name);
+        saveToPrefs(Constants.IGRA, Constants.BROJ_IGRACA, "" + brojIgraca);
+        saveToPrefs(Constants.IGRA, Constants.IGRAC1, pl1Name);
+        saveToPrefs(Constants.IGRA, Constants.IGRAC2, pl2Name);
+        saveToPrefs(Constants.IGRA, Constants.IGRAC3, pl3Name);
+        saveToPrefs(Constants.IGRA, Constants.IGRAC4, pl4Name);
 
+        FragmentManager fm = this.getFragmentManager();
+        Fragment fragment = new GameFragment();
+        fm.beginTransaction().addToBackStack(null).replace(R.id.container, fragment, "game").commit();
 
-		FragmentManager fm = this.getFragmentManager();
-		Fragment fragment = new GameFragment();
-		fm.beginTransaction().addToBackStack(null).replace(R.id.container, fragment, "game").commit();
+    }
 
-	}
+    private void saveToPrefs(String prefsName, String prefsValue, String value)
+    {
+        SharedPreferences settings = getActivity().getSharedPreferences(prefsName, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(prefsValue, value);
+        editor.commit();
 
-	private void saveToPrefs(String prefsName, String prefsValue, String value)
-	{
-		SharedPreferences settings = getActivity().getSharedPreferences(prefsName, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString(prefsValue, value);
-		editor.commit();
-
-	}
+    }
 
 }

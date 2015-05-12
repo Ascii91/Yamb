@@ -13,8 +13,9 @@ public class Bacanje
     private String selected1;
     private String selected2;
 
-    public Bacanje(){}
-    
+    public Bacanje()
+    {}
+
     public Bacanje(int brojPartije, String igrac, String bacanje1, String bacanje2, String bacanje3, int x, int y, int value, String selected1, String selected2)
     {
         super();
@@ -49,7 +50,6 @@ public class Bacanje
     {
         this.igrac = igrac;
     }
-
 
     public String getBacanje1()
     {

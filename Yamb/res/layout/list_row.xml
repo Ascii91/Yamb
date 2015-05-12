@@ -10,7 +10,8 @@
         android:layout_weight="0.25"
         android:paddingLeft="5dp"
         android:text="M"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/name"
@@ -18,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:text="M"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/score"
@@ -26,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:text="M"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/datum"
@@ -34,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:text="M"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
 
 </LinearLayout>

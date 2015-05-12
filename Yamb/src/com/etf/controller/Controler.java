@@ -14,241 +14,241 @@ import com.etf.view.Dices;
 
 public class Controler
 {
-	private static Controler controler;
+    private static Controler controler;
 
-	private Igra igra;
-	private boolean shakingInProgress;
-	private Board board;
-	private State stanje = State.POCETNO_STANJE;
-	private GameFragment gameFragment;
-	private int brojBacanja;
-	private int[] values = new int[6];
-	
-	private int totalMoves;
-	private String playerName;
-	private int playerNumber;
-	private int numOfPlayers;
-	private boolean isNajava;
-	private int score = 0;
-	private Dices dices;
+    private Igra             igra;
+    private boolean          shakingInProgress;
+    private Board            board;
+    private State            stanje = State.POCETNO_STANJE;
+    private GameFragment     gameFragment;
+    private int              brojBacanja;
+    private int[]            values = new int[6];
 
-	public void resetControler()
-	{
-		controler = new Controler();
-		if (igra != null)
-		{
-			igra.setLista(new ArrayList<Bacanje>());
-		}
-	}
+    private int              totalMoves;
+    private String           playerName;
+    private int              playerNumber;
+    private int              numOfPlayers;
+    private boolean          isNajava;
+    private int              score  = 0;
+    private Dices            dices;
 
-	public int getNumOfPlayers()
-	{
-		return numOfPlayers;
-	}
+    public void resetControler()
+    {
+        controler = new Controler();
+        if (igra != null)
+        {
+            igra.setLista(new ArrayList<Bacanje>());
+        }
+    }
 
-	public Board getBoard()
-	{
-		return board;
-	}
+    public int getNumOfPlayers()
+    {
+        return numOfPlayers;
+    }
 
-	public static void setControler(Controler controler)
-	{
-		Controler.controler = controler;
-	}
+    public Board getBoard()
+    {
+        return board;
+    }
 
-	public void stopShaking()
-	{
-		setShakingInProgress(false);
-	}
+    public static void setControler(Controler controler)
+    {
+        Controler.controler = controler;
+    }
 
-	public static Controler getControler()
-	{
-		if (controler == null)
-		{
-			controler = new Controler();
-		}
-		return controler;
-	}
+    public void stopShaking()
+    {
+        setShakingInProgress(false);
+    }
 
-	public boolean isShakingInProgress()
-	{
-		return shakingInProgress;
-	}
+    public static Controler getControler()
+    {
+        if (controler == null)
+        {
+            controler = new Controler();
+        }
+        return controler;
+    }
 
-	public void setShakingInProgress(boolean shakingInProgress)
-	{
-		this.shakingInProgress = shakingInProgress;
-	}
+    public boolean isShakingInProgress()
+    {
+        return shakingInProgress;
+    }
 
-	public void initAndStartGame()
-	{
-		SharedPreferences prefs = getControler().getBoard().getContext().getSharedPreferences(Constants.IGRA, 0);
-		String pl1 = prefs.getString(Constants.IGRAC1, "-");
-		String pl2 = prefs.getString(Constants.IGRAC2, "-");
-		String pl3 = prefs.getString(Constants.IGRAC3, "-");
-		String pl4 = prefs.getString(Constants.IGRAC4, "-");
-		long vreme = System.currentTimeMillis();
-		int trajanje = 0;
-		int brojIgraca = Integer.parseInt(prefs.getString(Constants.BROJ_IGRACA, "1"));
+    public void setShakingInProgress(boolean shakingInProgress)
+    {
+        this.shakingInProgress = shakingInProgress;
+    }
 
-		igra = new Igra(pl1, pl2, pl3, pl4, vreme, trajanje, brojIgraca);
+    public void initAndStartGame()
+    {
+        SharedPreferences prefs = getControler().getBoard().getContext().getSharedPreferences(Constants.IGRA, 0);
+        String pl1 = prefs.getString(Constants.IGRAC1, "-");
+        String pl2 = prefs.getString(Constants.IGRAC2, "-");
+        String pl3 = prefs.getString(Constants.IGRAC3, "-");
+        String pl4 = prefs.getString(Constants.IGRAC4, "-");
+        long vreme = System.currentTimeMillis();
+        int trajanje = 0;
+        int brojIgraca = Integer.parseInt(prefs.getString(Constants.BROJ_IGRACA, "1"));
 
-		new GameProgress().execute();
+        igra = new Igra(pl1, pl2, pl3, pl4, vreme, trajanje, brojIgraca);
 
-	}
+        new GameProgress().execute();
 
-	public State getStanje()
-	{
-		return stanje;
-	}
+    }
 
-	public void setStanje(State stanje)
-	{
-		this.stanje = stanje;
-	}
+    public State getStanje()
+    {
+        return stanje;
+    }
 
-	public void setBoard(Board board)
-	{
-		this.board = board;
+    public void setStanje(State stanje)
+    {
+        this.stanje = stanje;
+    }
 
-	}
+    public void setBoard(Board board)
+    {
+        this.board = board;
 
-	public GameFragment getGameFragment()
-	{
-		return gameFragment;
-	}
+    }
 
-	public void setGameFragment(GameFragment gameFragment)
-	{
-		this.gameFragment = gameFragment;
-	}
+    public GameFragment getGameFragment()
+    {
+        return gameFragment;
+    }
 
-	public int getBrojBacanja()
-	{
-		return brojBacanja;
-	}
+    public void setGameFragment(GameFragment gameFragment)
+    {
+        this.gameFragment = gameFragment;
+    }
 
-	public void setBrojBacanja(int brojBacanja)
-	{
-		this.brojBacanja = brojBacanja;
-	}
+    public int getBrojBacanja()
+    {
+        return brojBacanja;
+    }
 
-	public int[] getValues()
-	{
-		return values;
-	}
+    public void setBrojBacanja(int brojBacanja)
+    {
+        this.brojBacanja = brojBacanja;
+    }
 
-	public void setValues(int[] values)
-	{
-		this.values = values;
-	}
+    public int[] getValues()
+    {
+        return values;
+    }
 
-	public int getPlayerNumber()
-	{
-		return playerNumber;
-	}
+    public void setValues(int[] values)
+    {
+        this.values = values;
+    }
 
-	public void setPlayerNumber(int playerNumber)
-	{
-		// cuvamo stari score
-		switch (this.getPlayerNumber())
-		{
+    public int getPlayerNumber()
+    {
+        return playerNumber;
+    }
 
-		case 1:
-			board.setPlayer1Score(score);
-			break;
-		case 2:
-			board.setPlayer2Score(score);
-			break;
-		case 3:
-			board.setPlayer3Score(score);
-			break;
-		case 4:
-			board.setPlayer4Score(score);
-			break;
+    public void setPlayerNumber(int playerNumber)
+    {
+        // cuvamo stari score
+        switch (this.getPlayerNumber())
+        {
 
-		}
+            case 1 :
+                board.setPlayer1Score(score);
+                break;
+            case 2 :
+                board.setPlayer2Score(score);
+                break;
+            case 3 :
+                board.setPlayer3Score(score);
+                break;
+            case 4 :
+                board.setPlayer4Score(score);
+                break;
 
-		switch (playerNumber)
-		{
-		case 1:
-			score = board.getPlayer1Score();
-			break;
-		case 2:
-			score = board.getPlayer2Score();
-			break;
-		case 3:
-			score = board.getPlayer3Score();
-			break;
-		case 4:
-			score = board.getPlayer4Score();
-			break;
+        }
 
-		}
+        switch (playerNumber)
+        {
+            case 1 :
+                score = board.getPlayer1Score();
+                break;
+            case 2 :
+                score = board.getPlayer2Score();
+                break;
+            case 3 :
+                score = board.getPlayer3Score();
+                break;
+            case 4 :
+                score = board.getPlayer4Score();
+                break;
 
-		this.playerNumber = playerNumber;
-	}
+        }
 
-	public String getPlayerName()
-	{
-		return playerName;
-	}
+        this.playerNumber = playerNumber;
+    }
 
-	public void setPlayerName(String playerName)
-	{
-		this.playerName = playerName;
-	}
+    public String getPlayerName()
+    {
+        return playerName;
+    }
 
-	public void setNumOfPlayers(int num)
-	{
-		this.numOfPlayers = num;
-	}
+    public void setPlayerName(String playerName)
+    {
+        this.playerName = playerName;
+    }
 
-	public boolean isNajava()
-	{
-		return isNajava;
-	}
+    public void setNumOfPlayers(int num)
+    {
+        this.numOfPlayers = num;
+    }
 
-	public void setNajava(boolean isNajava)
-	{
-		this.isNajava = isNajava;
-	}
+    public boolean isNajava()
+    {
+        return isNajava;
+    }
 
-	public int getScore()
-	{
-		return score;
-	}
+    public void setNajava(boolean isNajava)
+    {
+        this.isNajava = isNajava;
+    }
 
-	public void setScore(int score)
-	{
-		this.score = score;
-	}
+    public int getScore()
+    {
+        return score;
+    }
 
-	public Dices getDices()
-	{
-		return dices;
-	}
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 
-	public void setDices(Dices dices)
-	{
-		this.dices = dices;
-	}
+    public Dices getDices()
+    {
+        return dices;
+    }
 
-	public Igra getIgra()
-	{
-		return igra;
-	}
+    public void setDices(Dices dices)
+    {
+        this.dices = dices;
+    }
 
-	public void setIgra(Igra igra)
-	{
-		this.igra = igra;
-	}
+    public Igra getIgra()
+    {
+        return igra;
+    }
 
-	public void setSensitiviy(int sens)
-	{
-	    
-	    getBoard().getDices().setSensitivity(sens);
-	}
+    public void setIgra(Igra igra)
+    {
+        this.igra = igra;
+    }
+
+    public void setSensitiviy(int sens)
+    {
+
+        getBoard().getDices().setSensitivity(sens);
+    }
 
     public int getTotalMoves()
     {

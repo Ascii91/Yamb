@@ -27,5 +27,7 @@
     <string name="rezultat">Rezultat</string>
     <string name="datum">Datum</string>
     <string name="delete_all">Obriši sve</string>
-
+	   <string name="simulation_message">Da li ste siurni da želite da pokrenete simulaciju partije?</string>
+    
+    
 </resources>

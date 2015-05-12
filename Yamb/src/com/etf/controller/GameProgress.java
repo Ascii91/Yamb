@@ -6,10 +6,9 @@ import com.etf.simulation.Bacanje;
 import com.etf.utils.State;
 import com.etf.view.Board;
 
-public class GameProgress 
+public class GameProgress
 {
 
-  
     protected Void doInBackground(Void... params)
     {
 
