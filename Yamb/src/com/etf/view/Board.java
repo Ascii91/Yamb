@@ -50,7 +50,7 @@ public class Board extends ImageView implements OnTouchListener
     private Paint       txtPaint     = new Paint();
 
     public Board(Context context)
-    {
+    { 
         super(context);
         initBoard();
     }
