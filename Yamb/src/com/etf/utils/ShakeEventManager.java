@@ -45,7 +45,7 @@ public class ShakeEventManager implements SensorEventListener
 
     public void register()
     {
-        sManager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
+        sManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override

@@ -319,7 +319,7 @@ public class Field extends ImageView
 
             }
             // U pitanju je upis u hand kolonu
-            else if (move == 1 && fieldData.getFieldX() / fieldData.getFieldWidth() == 5 && getType() == 2)
+            else if (move == 1 && fieldData.getFieldX() / fieldData.getFieldWidth() == 5 && getType() == 2&& fieldData.getFieldValue()==-1)
             {
                 Controler.getControler().setNajava(false);
                 fieldData.setFieldValue(fieldData.getSugestion());
