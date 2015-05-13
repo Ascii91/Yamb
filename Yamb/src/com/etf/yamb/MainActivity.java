@@ -93,9 +93,13 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onResume()
     {
+        super.onResume();
         try
         {
-            if (Controler.getControler().getBrojBacanja() != 3)
+            FragmentManager fm = getFragmentManager();
+            Fragment fragment = fm.findFragmentByTag("game");
+
+            if (Controler.getControler().getBrojBacanja() != 3 && fragment.isAdded())
             {
                 Controler.getControler().getBoard().enableShaking();
             }
@@ -105,7 +109,6 @@ public class MainActivity extends FragmentActivity
 
         }
 
-        super.onResume();
     }
 
 }

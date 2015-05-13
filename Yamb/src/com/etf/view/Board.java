@@ -122,7 +122,7 @@ public class Board extends ImageView implements OnTouchListener
      * Ukljucivanje funkcionalnosti muckanja
      */
     public void enableShaking()
-    {
+    {   Log.e("Enable shaking", "true");
         getDices().enableShaking();
     }
 
@@ -130,7 +130,7 @@ public class Board extends ImageView implements OnTouchListener
      * Iskljucivanje funkcionalnosti muækanja
      */
     public void disableShaking()
-    {
+    {   Log.e("Disable shaking", "true");
         getDices().disableShaking();
     }
 
