@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.etf.controller.Controler;
 import com.etf.db.YambDb;
 
 public class SimulationProgress extends AsyncTask<Context, Void, Void>
@@ -51,7 +50,7 @@ public class SimulationProgress extends AsyncTask<Context, Void, Void>
             
         }
         // ispisi cestitku i popuj stek    
-            
+         
             
             
             
