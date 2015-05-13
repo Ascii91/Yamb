@@ -3,8 +3,6 @@ package com.etf.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 import com.etf.controller.Controler;
 import com.etf.model.FieldData;
 import com.etf.view.Field;

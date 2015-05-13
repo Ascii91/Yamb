@@ -12,19 +12,19 @@ public class ShakeEventManager implements SensorEventListener
     private SensorManager      sManager;
     private Sensor             s;
 
-    private static final int   MOV_THRESHOLD              = 2;
+    private static final int   MOV_THRESHOLD              = 2;           // Donja granica
     private static float       ALPHA                      = 1.0F;
     private static final int   SHAKE_WINDOW_TIME_INTERVAL = 600;         // milliseconds
-    private static final float MOV_LIMIT                  = 99;
+    private static final float MOV_LIMIT                  = 99;          // Gornja granica
 
     // Gravity force on x,y,z axis
     private float              gravity[]                  = new float[3];
 
-    private int                counter;
     private long               firstMovTime;
     private ShakeListener      listener;
     private boolean            shakeInProgres             = false;
-    private int                counter2                   = 0;
+    private int                smirenost;
+    private int                aktivnost;
     private Context            context;
 
     public ShakeEventManager()
@@ -45,63 +45,67 @@ public class ShakeEventManager implements SensorEventListener
 
     public void register()
     {
-        sManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
+        sManager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent)
     {
-        float maxAcc = calcMaxAcceleration(sensorEvent);
+        float maxAcc = calcMaxAcceleration(sensorEvent);// Izracunavamo trenutno ubrzanje
+
+        // Zaletanje kockica :D
         if (maxAcc >= MOV_THRESHOLD && maxAcc < MOV_LIMIT)
         {
-
-            counter2 = 0;
-            if (counter <= 0)// ako muckanje nije u toku zapocni novo merenje
-                           // muckanja
+            smirenost = 0;
+          
+            if (aktivnost <= 0)// ako muckanje nije u toku zapocni novo merenje  muckanja (Ovo se desava kad se prvi put udje ovde )
             {
-                counter++;
+                aktivnost++;
 
                 firstMovTime = System.currentTimeMillis();
-
             }
             else
             {
                 long now = System.currentTimeMillis();
-                if ((now - firstMovTime) < SHAKE_WINDOW_TIME_INTERVAL)
+              
+                if ((now - firstMovTime) < SHAKE_WINDOW_TIME_INTERVAL) // ukoliko nismosmo muckali vise od SHAKE WINDOW TIME INTERVALa
                 {
 
-                    counter++;
+                    aktivnost++;
 
                 }
-                else
+                else  // ako smo muckali onoliko koliko treba
                 {
-                    if (!shakeInProgres)
+                    if (!shakeInProgres) // ukoliko nije pocelo vec postavi ga na pocelo i obavesti listener da je pocelo muckanje
                     {
                         shakeInProgres = true;
                         listener.onShake(); // obavestavamo da je pocelo muækanje
                     }
-                    return;
+                    return;  // u toku muckanja pozivace se ovaj  return 
                 }
 
             }
         }
-        else  //Smirivanje kockica
+        else
+        // Smirivanje kockica
         {
+            //Ako je u toku muckanje
             if (shakeInProgres)
             {
-                counter2++;
+                smirenost++;
 
-                if (counter2 > 3)
+                if (smirenost > 3) // ako su se kockice dovoljno smirile
                 {
                     resetAllData();
                 }
             }
+            //Ako nije u toku muckanje 
             else
             {
-                counter--;
-                if (counter < 0)
+                aktivnost--;
+                if (aktivnost < 0)// obezbedjuje da ne ode u minus
                 {
-                    counter = 0;
+                    aktivnost = 0;
                 }
             }
         }
@@ -138,6 +142,12 @@ public class ShakeEventManager implements SensorEventListener
         return Math.max(max1, accZ);
     }
 
+    /**
+     * Racunanje gravitacione sile
+     * @param currentVal
+     * @param index
+     * @return
+     */
     private float calcGravityForce(float currentVal, int index)
     {
         return ALPHA * gravity[index] + (1 - ALPHA) * currentVal;
@@ -146,8 +156,8 @@ public class ShakeEventManager implements SensorEventListener
     private void resetAllData()
     {
 
-        counter = 0;
-        counter2 = 0;
+        aktivnost = 0;
+        smirenost = 0;
         shakeInProgres = false;
         listener.onStopShaking();
 

@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.etf.db.YambDb;
 import com.etf.simulation.Igra;
 import com.etf.utils.ListObject;

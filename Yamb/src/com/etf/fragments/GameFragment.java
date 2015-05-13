@@ -12,40 +12,39 @@ import android.view.ViewGroup;
 import com.etf.controller.Controler;
 import com.etf.yamb.R;
 
-//Frgment u kome se odvija igrica
+//Fragment u kome se odvija igrica
 public class GameFragment extends Fragment
 {
 
-	private View view;
+    private View view;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		super.onCreateView(inflater, container, savedInstanceState);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.game_fragment_layout, container, false);
-		
-		Controler.getControler().setGameFragment(this);
-		Controler.getControler().initAndStartGame();
-		return view;
-	}
+        Controler.getControler().setGameFragment(this);
+        Controler.getControler().initAndStartGame();
+        return view;
+    }
 
-	public void onBackPressed()
-	{  final FragmentManager fm = this.getActivity().getFragmentManager();
-		new AlertDialog.Builder(this.getActivity())
-	    .setTitle(R.string.quit_title)
-	    .setMessage(R.string.quit_message)
-	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	        fm.popBackStack();
-	        }
-	     })
-	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	            // do nothing
-	        }
-	     })
-	    .setIcon(android.R.drawable.ic_dialog_alert)
-	     .show();
-	}
+    public void onBackPressed()
+    {
+        final FragmentManager fm = this.getActivity().getFragmentManager();
+        new AlertDialog.Builder(this.getActivity()).setTitle(R.string.quit_title).setMessage(R.string.quit_message).setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        fm.popBackStack();
+                    }
+                }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                // do nothing
+            }
+        }).setIcon(android.R.drawable.ic_dialog_alert).show();
+    }
 
 }
