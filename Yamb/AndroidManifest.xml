@@ -16,18 +16,18 @@
         android:icon="@drawable/six"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
-        <activity android:name="com.etf.fragments.SplashActivity" >
+        <activity android:name="com.etf.activities.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.etf.fragments.SettingsActivity" >
+        <activity android:name="com.etf.activities.SettingsActivity" >
         </activity>
-        <activity android:name="com.etf.fragments.StatisticsActivity" >
+        <activity android:name="com.etf.activities.StatisticsActivity" >
         </activity>
-        <activity android:name="com.etf.fragments.GameActivity"></activity>
+        <activity android:name="com.etf.activities.GameActivity"></activity>
     </application>
 
 </manifest>

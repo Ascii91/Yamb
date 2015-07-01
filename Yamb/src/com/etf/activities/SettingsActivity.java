@@ -1,4 +1,4 @@
-package com.etf.fragments;
+package com.etf.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -36,12 +36,7 @@ public class SettingsActivity extends Activity implements OnClickListener, OnSee
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_fragment_layout);
-//		try
-//		{
-//			//Controler.getControler().getBoard().disableShaking();
-//		} catch (Exception e)
-//		{
-//		}
+
 		seekBar = (SeekBar) findViewById(R.id.seekBar1);
 		sacuvaj = (Button) findViewById(R.id.btn_sacuvaj);
 		nazad = (Button) findViewById(R.id.btn_nazad);

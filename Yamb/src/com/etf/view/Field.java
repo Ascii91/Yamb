@@ -28,9 +28,9 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.etf.activities.SettingsActivity;
 import com.etf.controller.Controler;
 import com.etf.controller.GameProgress;
-import com.etf.fragments.SettingsActivity;
 import com.etf.model.FieldData;
 import com.etf.simulation.Bacanje;
 import com.etf.utils.Constants;

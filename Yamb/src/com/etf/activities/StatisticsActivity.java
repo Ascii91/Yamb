@@ -1,4 +1,4 @@
-package com.etf.fragments;
+package com.etf.activities;
 
 import java.util.ArrayList;
 import java.util.Calendar;

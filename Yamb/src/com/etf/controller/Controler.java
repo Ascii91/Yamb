@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import android.content.SharedPreferences;
 
-import com.etf.fragments.GameActivity;
+import com.etf.activities.GameActivity;
 import com.etf.simulation.Bacanje;
 import com.etf.simulation.Igra;
 import com.etf.utils.Constants;

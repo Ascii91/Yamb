@@ -1,4 +1,4 @@
-package com.etf.fragments;
+package com.etf.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
