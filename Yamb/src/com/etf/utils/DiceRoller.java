@@ -2,6 +2,7 @@ package com.etf.utils;
 
 import android.content.Context;
 
+import com.etf.controller.Controler;
 import com.etf.view.Dices;
 
 //Klasa za vræenje kockica
@@ -18,10 +19,13 @@ public class DiceRoller implements ShakeEventManager.ShakeListener
 
     public void register(Context context)
     {
-        sd = new ShakeEventManager();
-        sd.setListener(this);
-        sd.init(context);
-        sd.register();
+        if (Controler.getControler().isSimulation() == false)
+        {
+            sd = new ShakeEventManager();
+            sd.setListener(this);
+            sd.init(context);
+            sd.register();
+        }
     }
 
     public void deregister()

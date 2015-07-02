@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/simulation"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+     >
+
+    <com.etf.view.Board
+        android:id="@+id/board"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center" 
+        android:background="@android:color/holo_green_dark"
+     
+        />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="172dp"
+        android:src="@drawable/left_arrow" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageView1"
+        android:src="@drawable/right_arrow" />
+
+</RelativeLayout>
