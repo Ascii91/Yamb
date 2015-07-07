@@ -74,7 +74,7 @@ public class Board extends ImageView implements OnTouchListener
 	{
 
 		Controler.getControler().setBoard(this);
-		fields = new ArrayList<Field>();
+		setFields(new ArrayList<Field>());
 		fieldsPlayer1 = new ArrayList<Field>();
 		fieldsPlayer2 = new ArrayList<Field>();
 		fieldsPlayer3 = new ArrayList<Field>();
@@ -98,7 +98,7 @@ public class Board extends ImageView implements OnTouchListener
 				{
 					type = 1;
 				}// sum
-				fields.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
+				getFields().add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
 				fieldsPlayer1.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
 				fieldsPlayer2.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
 				fieldsPlayer3.add(new Field(this.getContext(), new FieldData(this.getContext(), i, j), type));
@@ -139,9 +139,10 @@ public class Board extends ImageView implements OnTouchListener
 	@Override
 	protected void onDraw(Canvas canvas)
 	{
+		Log.e("onDraw", "truie");
 		super.onDraw(canvas);
 
-		for (Field f : fields)
+		for (Field f : getFields())
 		{
 			f.draw(canvas);
 
@@ -250,7 +251,7 @@ public class Board extends ImageView implements OnTouchListener
 			return;
 		}
 		Log.e("MOVE", "" + num);
-		Calculator.calculateSum(fields);
+		Calculator.calculateSum(getFields());
 
 		Controler.getControler().getGameActivity().runOnUiThread(new Runnable()
 		{
@@ -263,21 +264,21 @@ public class Board extends ImageView implements OnTouchListener
 				{
 				case 1:
 
-					fields = fieldsPlayer1;
+					setFields(fieldsPlayer1);
 
 					break;
 				case 2:
-					fields = fieldsPlayer2;
+					setFields(fieldsPlayer2);
 					break;
 				case 3:
-					fields = fieldsPlayer3;
+					setFields(fieldsPlayer3);
 					break;
 				case 4:
-					fields = fieldsPlayer4;
+					setFields(fieldsPlayer4);
 					break;
 
 				}
-				Calculator.calculateSum(fields);
+				Calculator.calculateSum(getFields());
 				createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
 
 			}
@@ -321,7 +322,7 @@ public class Board extends ImageView implements OnTouchListener
 		{
 		case MotionEvent.ACTION_DOWN:
 			getDices().onTouch(event);
-			for (Field f : fields)
+			for (Field f : getFields())
 			{
 				f.onTouch(event);
 			}
@@ -348,35 +349,35 @@ public class Board extends ImageView implements OnTouchListener
 		if (i == 1)
 		{
 
-			ColumnUtils.columnDown(fields);
-			ColumnUtils.columnUpDown(fields);
-			ColumnUtils.columnUp(fields);
-			ColumnUtils.columnMiddleUpDown(fields);
-			ColumnUtils.columnHand(fields);
-			ColumnUtils.columnBell(fields);
+			ColumnUtils.columnDown(getFields());
+			ColumnUtils.columnUpDown(getFields());
+			ColumnUtils.columnUp(getFields());
+			ColumnUtils.columnMiddleUpDown(getFields());
+			ColumnUtils.columnHand(getFields());
+			ColumnUtils.columnBell(getFields());
 		} else if (i == 2)
 		{
 			if (Controler.getControler().isNajava() == false)
 			{
-				ColumnUtils.columnDown(fields);
-				ColumnUtils.columnUpDown(fields);
-				ColumnUtils.columnUp(fields);
-				ColumnUtils.columnMiddleUpDown(fields);
+				ColumnUtils.columnDown(getFields());
+				ColumnUtils.columnUpDown(getFields());
+				ColumnUtils.columnUp(getFields());
+				ColumnUtils.columnMiddleUpDown(getFields());
 			} else
 			{
-				ColumnUtils.columnBell(fields);
+				ColumnUtils.columnBell(getFields());
 			}
 		} else if (i == 3)
 		{
 			if (Controler.getControler().isNajava() == false)
 			{
-				ColumnUtils.columnDown(fields);
-				ColumnUtils.columnUpDown(fields);
-				ColumnUtils.columnUp(fields);
-				ColumnUtils.columnMiddleUpDown(fields);
+				ColumnUtils.columnDown(getFields());
+				ColumnUtils.columnUpDown(getFields());
+				ColumnUtils.columnUp(getFields());
+				ColumnUtils.columnMiddleUpDown(getFields());
 			} else
 			{
-				ColumnUtils.columnBell(fields);
+				ColumnUtils.columnBell(getFields());
 			}
 		}
 	}
@@ -386,7 +387,7 @@ public class Board extends ImageView implements OnTouchListener
 	 */
 	public void resetSugestions()
 	{
-		for (Field f : fields)
+		for (Field f : getFields())
 		{
 			f.setHighlightColor(0);
 			f.getFieldData().setSugestion(-1);
@@ -398,7 +399,7 @@ public class Board extends ImageView implements OnTouchListener
 	 */
 	public void resetNajava()
 	{
-		for (Field f : fields)
+		for (Field f : getFields())
 		{
 			f.setHighlightColor(0);
 			f.getFieldData().setNajava(false);
@@ -531,6 +532,16 @@ public class Board extends ImageView implements OnTouchListener
 				dst.close();
 			}
 		}
+	}
+
+	public List<Field> getFields()
+	{
+		return fields;
+	}
+
+	public void setFields(List<Field> fields)
+	{
+		this.fields = fields;
 	}
 
 }

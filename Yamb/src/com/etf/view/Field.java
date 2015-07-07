@@ -162,7 +162,35 @@ public class Field extends ImageView
 
 					paint.setTextSize(42);
 					paint.setStrokeWidth(3);
-					paint.setColor(Color.BLACK);
+
+					FieldData tempFieldData = null;
+					switch (Controler.getControler().getPlayerNumber())
+					{
+					case 1:
+						tempFieldData = Controler.getControler().getLastFieldData1();
+						break;
+					case 2:
+						tempFieldData = Controler.getControler().getLastFieldData2();
+						break;
+					case 3:
+						tempFieldData = Controler.getControler().getLastFieldData3();
+						break;
+					case 4:
+						tempFieldData = Controler.getControler().getLastFieldData4();
+						break;
+					}
+
+					if (tempFieldData == null)
+					{
+						paint.setColor(Color.BLACK);
+					} else if (tempFieldData.equals(this.getFieldData()))
+					{
+						paint.setColor(Color.MAGENTA);
+
+					} else
+					{
+						paint.setColor(Color.BLACK);
+					}
 					canvas.drawText("" + fieldData.getFieldValue(), fieldData.getFieldX() + fieldData.getFieldWidth() / 3, fieldData.getFieldY() + 2 * fieldData.getFieldHeight()
 							/ 3, paint);
 				}
@@ -339,6 +367,25 @@ public class Field extends ImageView
 				int playerNum = Controler.getControler().getPlayerNumber();
 
 				// prebacujemo se na seledeæeg igraèa
+
+				// Ovaj deo je za bojenje polja
+				FieldData lastFieldData = this.getFieldData();
+				switch (playerNum)
+				{
+				case 1:
+					Controler.getControler().setLastFieldData1(lastFieldData);
+					break;
+				case 2:
+					Controler.getControler().setLastFieldData2(lastFieldData);
+					break;
+				case 3:
+					Controler.getControler().setLastFieldData3(lastFieldData);
+					break;
+				case 4:
+					Controler.getControler().setLastFieldData4(lastFieldData);
+					break;
+				}
+
 				playerNum++;
 				if (playerNum > numP)
 				{
@@ -364,7 +411,6 @@ public class Field extends ImageView
 				}
 
 				Toast.makeText(this.getContext(), R.string.uneto_polje, Toast.LENGTH_SHORT).show();
-
 				// Ažuriranje polja potrebnih za statistiku
 				List<Bacanje> lista = Controler.getControler().getIgra().getLista();
 				lista.get(lista.size() - 1).setX(fieldData.getFieldX());
@@ -429,11 +475,10 @@ public class Field extends ImageView
 
 				Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
 				v.vibrate(50);
-				 Intent i = new Intent(this.getContext(),
-				 SettingsActivity.class);
-				
-				 this.getContext().startActivity(i);
-				
+				Intent i = new Intent(this.getContext(), SettingsActivity.class);
+
+				this.getContext().startActivity(i);
+
 				//
 
 			}

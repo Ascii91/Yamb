@@ -1,10 +1,13 @@
 package com.etf.utils;
 
+import com.etf.controller.Controler;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 public class ShakeEventManager implements SensorEventListener
 {
@@ -153,8 +156,37 @@ public class ShakeEventManager implements SensorEventListener
 		float accZ = event.values[2] - gravity[2];
 
 		float max1 = Math.max(accX, accY);
+
+		float max3 = Math.max(max1, accZ);
+
+		if (max3 > 8)
+		{
+			Controler.getControler().setVolume(1.0f);
+		} else
+		{
+			Controler.getControler().setVolume(0.1f);
+		}
+		Log.e("X", "" + accX);
+		Log.e("Y", "" + accY);
+		Log.e("Z", "" + accZ);
+
+		if (max3 == accZ && accZ > 3)
+		{
+			ctr++;
+			if (ctr >= 2)
+			{
+			//	Controler.getControler().setShouldSix(true);
+			}
+
+		} else
+		{
+			ctr = 0;
+		}
+
 		return Math.max(max1, accZ);
 	}
+
+	int ctr = 0;
 
 	/**
 	 * Racunanje gravitacione sile
@@ -170,7 +202,7 @@ public class ShakeEventManager implements SensorEventListener
 
 	private void resetAllData()
 	{
-
+		ctr = 0;
 		aktivnost = 0;
 		smirenost = 0;
 		shakeInProgres = false;

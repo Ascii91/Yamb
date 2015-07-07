@@ -151,20 +151,12 @@ public class Igra
         this.winnerScore = winnerScore;
     }
 
-    @Override
-    public String toString()
-    {
+	@Override
+	public String toString()
+	{
+		return "Igra [rb=" + rb + ", pl1=" + pl1 + ", pl2=" + pl2 + ", pl3=" + pl3 + ", pl4=" + pl4 + ", vreme=" + vreme + ", trajanje=" + trajanje + ", brojIgraca=" + brojIgraca
+				+ ", winnerName=" + winnerName + ", winnerScore=" + winnerScore + ", lista=" + lista + "]";
+	}
 
-        String str = pl1 + " " + pl2 + " " + pl3 + " " + pl4 + " *" + trajanje + "* " + vreme + "* " + brojIgraca;
-
-        for (Bacanje b : lista)
-        {
-            str += '\n';
-            str += b.getBacanje1() + " " + b.getBacanje2() + " " + b.getBacanje3() + " ig " + b.getIgrac() + " x" + b.getX() + " y" + b.getY() + " "
-                    + b.getValue() + " s1 " + b.getSelected1() + "s2 " + b.getSelected2();
-        }
-
-        return str;
-    }
 
 }
