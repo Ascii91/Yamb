@@ -175,7 +175,7 @@ public class ShakeEventManager implements SensorEventListener
 			ctr++;
 			if (ctr >= 2)
 			{
-			//	Controler.getControler().setShouldSix(true);
+				Controler.getControler().setShouldSix(true);
 			}
 
 		} else

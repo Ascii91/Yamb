@@ -279,7 +279,7 @@ public class Board extends ImageView implements OnTouchListener
 
 				}
 				Calculator.calculateSum(getFields());
-				createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
+	//			createDialog("Na potezu je " + Controler.getControler().getPlayerName() + "\nTapni a zatim promuckaj telefon").show();
 
 			}
 		});

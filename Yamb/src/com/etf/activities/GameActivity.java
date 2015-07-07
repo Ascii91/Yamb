@@ -31,6 +31,7 @@ public class GameActivity extends Activity
 
 		LocationListener locationListener = new MyLocationListener();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+		
 		Calendar c = Calendar.getInstance();
 
 		Log.e("time", "" + c);

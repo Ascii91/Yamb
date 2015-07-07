@@ -433,6 +433,24 @@ public class Field extends ImageView
 				// prebacivanje na sledeæeg igraèa
 				int numP = Controler.getControler().getNumOfPlayers();
 				int playerNum = Controler.getControler().getPlayerNumber();
+				
+				FieldData lastFieldData = this.getFieldData();
+				switch (playerNum)
+				{
+				case 1:
+					Controler.getControler().setLastFieldData1(lastFieldData);
+					break;
+				case 2:
+					Controler.getControler().setLastFieldData2(lastFieldData);
+					break;
+				case 3:
+					Controler.getControler().setLastFieldData3(lastFieldData);
+					break;
+				case 4:
+					Controler.getControler().setLastFieldData4(lastFieldData);
+					break;
+				}
+
 				playerNum++;
 				if (playerNum > numP)
 				{

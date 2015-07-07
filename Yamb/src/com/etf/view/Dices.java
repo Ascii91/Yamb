@@ -162,7 +162,7 @@ public class Dices extends ImageView
 						// TODO:
 						if (Controler.getControler().isShouldSix())
 						{
-							getValues()[dice] = 5;
+							getValues()[dice] = 6;
 						} // OVDE SE PODESAVA KOJAA VREDNOST
 						// values[dice] =5;
 					}
