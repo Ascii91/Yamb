@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -82,9 +83,14 @@ public class SimulationActivity extends Activity implements OnClickListener
     {
         switch (v.getId())
         {
-            case R.id.imageView1 :// left
+            case R.id.imageView1 :
+            	Log.e("Left", "true");
+            	// left
                 break;
-            case R.id.imageView2 : // right
+            case R.id.imageView2 : 
+
+            	Log.e("Right", "true");
+            	// right
                 break;
             default :
                 break;

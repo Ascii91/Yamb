@@ -50,6 +50,7 @@ public class Dices extends ImageView
 	private int[] values = new int[6];
 	private boolean[] selected = new boolean[6];
 	private int diceWidth;
+	
 	private MediaPlayer mp;
 	private boolean shouldPlay;
 

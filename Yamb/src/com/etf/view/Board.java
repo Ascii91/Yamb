@@ -243,7 +243,7 @@ public class Board extends ImageView implements OnTouchListener
 		num++;
 		Controler.getControler().setTotalMoves(num);
 
-		if (num / Controler.getControler().getNumOfPlayers() == 78)
+		if (num / Controler.getControler().getNumOfPlayers() == 79)
 		{
 
 			showWinnerDialog();

@@ -433,25 +433,7 @@ public class Field extends ImageView
 				 SettingsActivity.class);
 				
 				 this.getContext().startActivity(i);
-				final Activity act = (Activity) this.getContext();
-				// Poruka - restart partije
-				new AlertDialog.Builder((Activity) (this.getContext())).setTitle(R.string.quit_title).setMessage(R.string.warning_message)
-						.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int which)
-							{
-								Intent i = new Intent(act, SettingsActivity.class);
-
-							//	act.startActivity(i);
-						//		act.finish();
-							}
-						}).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int which)
-							{
-								// do nothing
-							}
-						}).setIcon(android.R.drawable.ic_dialog_alert);//.show();
+				
 				//
 
 			}

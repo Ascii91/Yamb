@@ -20,7 +20,7 @@ public class GameActivity extends Activity
 		setContentView(R.layout.game_fragment_layout);
 		Controler.getControler().setGameActivity(this);
 		Controler.getControler().initAndStartGame();
-		Log.e("CREATE:", "TR");
+	
 	}
 
 	public void onBackPressed()
