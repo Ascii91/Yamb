@@ -66,7 +66,7 @@ public class Controler
 	{
 		Controler.controler = controler;
 	}
-
+    //Add comment
 	public static Controler getControler()
 	{
 		if (controler == null)
